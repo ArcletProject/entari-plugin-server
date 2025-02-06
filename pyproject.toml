@@ -1,0 +1,28 @@
+[project]
+name = "entari-plugin-server"
+version = "0.1.0"
+description = "Entari plugin for running Satori Server"
+authors = [
+    {name = "RF-Tar-Railt", email = "rf_tar_railt@qq.com"},
+]
+dependencies = [
+    "arclet-entari>=0.12.1",
+    "satori-python-server>=0.16.3",
+]
+requires-python = ">=3.9"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+
+[tool.pdm]
+distribution = true
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "arclet-entari[yaml]>=0.12.1",
+    "nekobox @ git+https://github.com/wyapx/nekobox.git",
+]
