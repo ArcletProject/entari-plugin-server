@@ -3,9 +3,13 @@ from functools import reduce
 from importlib import import_module
 import re
 
-from arclet.entari import plugin
+from arclet.entari import plugin, logger as log_m
 from arclet.entari.logger import log
 from arclet.entari.config import BasicConfModel, field
+
+from graia.amnesia.builtins import asgi
+
+asgi.LoguruHandler = log_m.LoguruHandler
 
 
 class Config(BasicConfModel):
