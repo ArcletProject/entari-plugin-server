@@ -1,19 +1,20 @@
-from satori.server import Server, Adapter
+import re
 from functools import reduce
 from importlib import import_module
-import re
 
-from arclet.entari import plugin, logger as log_m
-from arclet.entari.logger import log
+from arclet.entari import plugin
+from arclet.entari import logger as log_m
 from arclet.entari.config import BasicConfModel, field
-
 from graia.amnesia.builtins import asgi
+from satori.server import Adapter, Server
+
+from .patch import DirectAdapterServer
 
 asgi.LoguruHandler = log_m.LoguruHandler
 
 
 class Config(BasicConfModel):
-    use_direct_adapter: bool = False
+    direct_adapter: bool = False
     """是否使用直连适配器"""
     adapters: list[dict] = field(default_factory=list)
     host: str = "127.0.0.1"
@@ -26,16 +27,13 @@ class Config(BasicConfModel):
 
 
 conf = plugin.get_config(Config)
-logger = log.wrapper("[Server]")
-server = Server(
-    conf.host,
-    conf.port,
-    conf.path,
-    conf.version,
-    conf.token,
-    stream_threshold=conf.stream_threshold,
-    stream_chunk_size=conf.stream_chunk_size,
-)
+logger = log_m.log.wrapper("[Server]")
+
+if conf.direct_adapter:
+    server = DirectAdapterServer(conf.host, conf.port, conf.path, conf.version, conf.token, None, conf.stream_threshold, conf.stream_chunk_size)
+else:
+    server = Server(conf.host, conf.port, conf.path, conf.version, conf.token, None, conf.stream_threshold, conf.stream_chunk_size)
+
 
 pattern = re.compile(r"(?P<module>[\w.]+)\s*(:\s*(?P<attr>[\w.]+)\s*)?((?P<extras>\[.*\])\s*)?$")
 
@@ -75,6 +73,7 @@ def _load_adapter(adapter_config: dict):
 adapters: list[Adapter] = [*filter(None, map(_load_adapter, conf.adapters))]
 
 for adapter in adapters:
+    logger.debug(f"Applying adapter {adapter}")
     server.apply(adapter)
 
 plugin.add_service(server)
