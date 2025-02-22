@@ -17,7 +17,7 @@ class DirectAdapterProtocol(EntariProtocol):
     server: Server
 
     async def call_api(
-self, action: str | Api, params: dict | None = None, multipart: bool = False, method: str = "POST"
+        self, action: str | Api, params: dict | None = None, multipart: bool = False, method: str = "POST"
     ):
         headers = {
             "Content-Type": "application/json",

@@ -39,10 +39,10 @@ pattern = re.compile(r"(?P<module>[\w.]+)\s*(:\s*(?P<attr>[\w.]+)\s*)?((?P<extra
 
 
 def _load_adapter(adapter_config: dict):
-    if "path" not in adapter_config:
-        logger.warning(f"Adapter config missing `path`: {adapter_config}")
+    if "$path" not in adapter_config:
+        logger.warning(f"Adapter config missing `$path`: {adapter_config}")
         return None
-    path = adapter_config["path"]
+    path = adapter_config["$path"]
     if path.startswith("@."):
         path = f"satori.adapters{path[1:]}"
     elif path.startswith("@"):
@@ -63,7 +63,7 @@ def _load_adapter(adapter_config: dict):
         logger.warning(f"Could not find adapter in {module.__name__}")
         return None
     if isinstance(ext, type) and issubclass(ext, Adapter):
-        return ext(**{k: v for k, v in adapter_config.items() if k != "path"})  # type: ignore
+        return ext(**{k: v for k, v in adapter_config.items() if k != "$path"})  # type: ignore
     elif isinstance(ext, Adapter):
         return ext
     logger.warning(f"Invalid adapter in {module.__name__}")
