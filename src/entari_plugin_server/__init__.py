@@ -8,9 +8,10 @@ from arclet.entari.config import BasicConfModel, field
 from graia.amnesia.builtins import asgi
 from satori.server import Adapter, Server
 
-from .patch import DirectAdapterServer
+from .patch import DirectAdapterServer, logger
 
 asgi.LoguruHandler = log_m.LoguruHandler
+plugin.declare_static()
 
 
 class Config(BasicConfModel):
@@ -27,12 +28,12 @@ class Config(BasicConfModel):
 
 
 conf = plugin.get_config(Config)
-logger = log_m.log.wrapper("[Server]")
 
 if conf.direct_adapter:
     server = DirectAdapterServer(conf.host, conf.port, conf.path, conf.version, conf.token, None, conf.stream_threshold, conf.stream_chunk_size)
 else:
     server = Server(conf.host, conf.port, conf.path, conf.version, conf.token, None, conf.stream_threshold, conf.stream_chunk_size)
+ASGI = asgi.UvicornASGIService(server.host, server.port)
 
 
 pattern = re.compile(r"(?P<module>[\w.]+)\s*(:\s*(?P<attr>[\w.]+)\s*)?((?P<extras>\[.*\])\s*)?$")
@@ -76,4 +77,5 @@ for adapter in adapters:
     logger.debug(f"Applying adapter {adapter}")
     server.apply(adapter)
 
+plugin.add_service(ASGI)
 plugin.add_service(server)

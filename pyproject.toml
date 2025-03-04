@@ -7,7 +7,7 @@ authors = [
 ]
 dependencies = [
     "arclet-entari>=0.12.1",
-    "satori-python-server>=0.16.3",
+    "satori-python-server>=0.16.4",
 ]
 requires-python = ">=3.9"
 readme = "README.md"
@@ -29,4 +29,5 @@ distribution = true
 dev = [
     "arclet-entari[yaml]>=0.12.1",
     "nekobox @ git+https://github.com/wyapx/nekobox.git",
+    "satori-python-adapter-onebot11>=0.1.0",
 ]

@@ -2,8 +2,8 @@ import json
 from io import BytesIO
 
 from arclet.entari import Entari
+from arclet.entari.logger import log
 from arclet.entari.session import EntariProtocol
-from loguru import logger
 from satori import Api, Event
 from satori.client import Account, ApiInfo
 from satori.exception import ActionFailed
@@ -11,6 +11,8 @@ from satori.server import Server
 from starlette.datastructures import FormData, Headers, UploadFile
 from starlette.requests import Request
 from starlette.responses import JSONResponse
+
+logger = log.wrapper("[Server]")
 
 
 class DirectAdapterProtocol(EntariProtocol):

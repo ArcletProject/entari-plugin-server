@@ -5,7 +5,7 @@
 groups = ["default", "dev"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:d9951b30801fee74f576e1b816a0d093c1c3769f0607ad1583653429a65f47fe"
+content_hash = "sha256:0f433477e3eed42905daa0c2e885141eba2649306680b5bde9e680713e816062"
 
 [[metadata.targets]]
 requires_python = ">=3.9"
@@ -976,6 +976,20 @@ files = [
 ]
 
 [[package]]
+name = "satori-python-adapter-onebot11"
+version = "0.1.0"
+requires_python = ">=3.9"
+summary = "Satori Protocol SDK for python, adapter for OneBot 11"
+groups = ["dev"]
+dependencies = [
+    "satori-python-server>=0.16.4",
+]
+files = [
+    {file = "satori_python_adapter_onebot11-0.1.0-py3-none-any.whl", hash = "sha256:d32f439408d7bf87a07bf18d78e9d1eedb25c3fdb2d0aef496960022e6c7c851"},
+    {file = "satori_python_adapter_onebot11-0.1.0.tar.gz", hash = "sha256:bfd992ed23c015f50bbcceb01d375943b3663cbe8601c669fd651131225c0d59"},
+]
+
+[[package]]
 name = "satori-python-client"
 version = "0.16.3"
 requires_python = ">=3.9"
@@ -1010,7 +1024,7 @@ files = [
 
 [[package]]
 name = "satori-python-server"
-version = "0.16.3"
+version = "0.16.4"
 requires_python = ">=3.9"
 summary = "Satori Protocol SDK for python, specify server part"
 groups = ["default", "dev"]
@@ -1024,8 +1038,8 @@ dependencies = [
     "uvicorn[standard]>=0.28.0",
 ]
 files = [
-    {file = "satori_python_server-0.16.3-py3-none-any.whl", hash = "sha256:c3d0128342f8a2fbc151de840bc50b3f258f8336e9ce1b77916d38444ff0c2bd"},
-    {file = "satori_python_server-0.16.3.tar.gz", hash = "sha256:260b23348684211292ca1cc71d0b2cd1a0da58633843328d99876052fa1935f9"},
+    {file = "satori_python_server-0.16.4-py3-none-any.whl", hash = "sha256:a79d7e1e55e56b2df4f703e8e0c4160d3232aade7898dcd6d1c0997e72e18534"},
+    {file = "satori_python_server-0.16.4.tar.gz", hash = "sha256:c577a9a221c28f0f332bed4c6f6870e85fde8d2979cba52d6cd1a546ae3a9517"},
 ]
 
 [[package]]
