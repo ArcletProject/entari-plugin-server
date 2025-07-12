@@ -1,6 +1,6 @@
 [project]
 name = "entari-plugin-server"
-version = "0.1.0"
+version = "0.2.0"
 description = "Entari plugin for running Satori Server"
 authors = [
     {name = "RF-Tar-Railt", email = "rf_tar_railt@qq.com"},
@@ -30,4 +30,5 @@ dev = [
     "arclet-entari[yaml]>=0.12.1",
     "nekobox @ git+https://github.com/wyapx/nekobox.git",
     "satori-python-adapter-onebot11>=0.1.0",
+    "satori-python-adapter-console>=0.1.0",
 ]
