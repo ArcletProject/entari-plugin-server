@@ -61,10 +61,15 @@ def _load_adapter(adapter_config: dict):
         attrs = filter(None, (match.group("attr") or "Adapter").split("."))
         ext = reduce(getattr, attrs, module)
     except AttributeError:
-        logger.warning(f"Could not find adapter in {module.__name__}")
-        return None
+        for attr in module.__dict__.values():
+            if isinstance(attr, type) and issubclass(attr, Adapter):
+                ext = attr
+                break
+        else:
+            logger.warning(f"Could not find adapter in {module.__name__}")
+            return None
     if isinstance(ext, type) and issubclass(ext, Adapter):
-        return ext(**{k: v for k, v in adapter_config.items() if k != "$path"})  # type: ignore
+        return ext(**{k: (log_m.logger_id if v == "$logger_id" else v) for k, v in adapter_config.items() if k != "$path"})  # type: ignore
     elif isinstance(ext, Adapter):
         return ext
     logger.warning(f"Invalid adapter in {module.__name__}")
