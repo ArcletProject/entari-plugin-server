@@ -20,7 +20,7 @@ class Config(BasicConfModel):
     adapters: list[dict] = field(default_factory=list)
     host: str = "127.0.0.1"
     port: int = 5140
-    path: str = "satori"
+    path: str = ""
     version: str = "v1"
     token: str | None = None
     stream_threshold: int = 16 * 1024 * 1024
