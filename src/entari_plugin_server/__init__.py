@@ -1,6 +1,8 @@
 import re
 from functools import reduce
 from importlib import import_module
+from typing import Any, Callable, cast
+from typing_extensions import TypeAlias
 
 from arclet.entari import plugin
 from arclet.entari import logger as log_m
@@ -10,8 +12,9 @@ from satori.server import Adapter, Server
 
 from .patch import DirectAdapterServer, logger
 
+DISPOSE: TypeAlias = Callable[[], None]
+
 asgi.LoguruHandler = log_m.LoguruHandler
-plugin.declare_static()
 
 
 class Config(BasicConfModel):
@@ -25,6 +28,19 @@ class Config(BasicConfModel):
     token: str | None = None
     stream_threshold: int = 16 * 1024 * 1024
     stream_chunk_size: int = 64 * 1024
+
+
+plugin.declare_static()
+plugin.metadata(
+    "server",
+    ["RF-Tar-Railt <rf_tar_railt@qq.com>"],
+    "0.2.1",
+    description="为 Entari 提供 Satori 服务器支持，基于此为 Entari 提供 ASGI 服务、适配器连接等功能",
+    urls={
+        "homepage": "https://github.com/ArcletProject/entari-plugin-server",
+    },
+    config=Config,
+)
 
 
 conf = plugin.get_config(Config)
@@ -84,3 +100,28 @@ for adapter in adapters:
 
 plugin.add_service(ASGI)
 plugin.add_service(server)
+
+
+def get_asgi() -> Any:
+    return server.app
+
+
+def replace_asgi(app: asgi.asgitypes.ASGI3Application) -> DISPOSE:
+    """
+    替换当前的 ASGI 应用
+
+    Args:
+        app (Any): 新的 ASGI 应用
+    """
+    if server.status.blocking:
+        logger.warning("Server is blocking, cannot replace ASGI app")
+        return lambda: None
+
+    old_app = server.app
+    server.app = app
+
+    def dispose(_old=old_app):
+        server.app = _old
+
+    plugin.collect_disposes(cast(DISPOSE, dispose))
+    return cast(DISPOSE, dispose)

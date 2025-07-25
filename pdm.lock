@@ -5,7 +5,7 @@
 groups = ["default", "dev"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:80709f962049808b0ef63be2fae623264b46cd0a5b8c3930730c4028e6b5707c"
+content_hash = "sha256:2f0ecd1ed2586d8592239623afccbee45b778f1b023fef08a809e0f68d07caf5"
 
 [[metadata.targets]]
 requires_python = ">=3.9"
@@ -1253,7 +1253,7 @@ files = [
 
 [[package]]
 name = "satori-python-server"
-version = "0.16.4"
+version = "0.16.5"
 requires_python = ">=3.9"
 summary = "Satori Protocol SDK for python, specify server part"
 groups = ["default", "dev"]
@@ -1267,8 +1267,8 @@ dependencies = [
     "uvicorn[standard]>=0.28.0",
 ]
 files = [
-    {file = "satori_python_server-0.16.4-py3-none-any.whl", hash = "sha256:a79d7e1e55e56b2df4f703e8e0c4160d3232aade7898dcd6d1c0997e72e18534"},
-    {file = "satori_python_server-0.16.4.tar.gz", hash = "sha256:c577a9a221c28f0f332bed4c6f6870e85fde8d2979cba52d6cd1a546ae3a9517"},
+    {file = "satori_python_server-0.16.5-py3-none-any.whl", hash = "sha256:43650f14e8d9257f2f6edab05739e38f6a4d9596d625a296fe53ad28b65d30ce"},
+    {file = "satori_python_server-0.16.5.tar.gz", hash = "sha256:23612416b73a05402eb4dd63171b5bf8d85c560f48202b73af84405d3b649d85"},
 ]
 
 [[package]]
