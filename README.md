@@ -1,5 +1,5 @@
 # entari-plugin-server
-Entari plugin for running Satori Server
+为 Entari 提供 Satori 服务器支持，基于此为 Entari 提供 ASGI 服务、适配器连接等功能
 
 ## 示例
 
