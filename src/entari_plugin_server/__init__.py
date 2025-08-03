@@ -1,14 +1,17 @@
 import re
 from functools import reduce
 from importlib import import_module
-from typing import Any, Callable, cast
+from typing import TYPE_CHECKING, Any, Callable, Optional, Union, cast
 from typing_extensions import TypeAlias
 
 from arclet.entari import plugin
 from arclet.entari import logger as log_m
 from arclet.entari.config import BasicConfModel, field
+from arclet.letoderea.typing import TCallable
 from graia.amnesia.builtins import asgi
 from satori.server import Adapter, Server
+from starlette.applications import Starlette
+from starlette.types import ASGIApp
 
 from .patch import DirectAdapterServer, logger
 
@@ -21,13 +24,21 @@ class Config(BasicConfModel):
     direct_adapter: bool = False
     """是否使用直连适配器"""
     adapters: list[dict] = field(default_factory=list)
+    """适配器配置列表"""
     host: str = "127.0.0.1"
+    """服务器主机地址"""
     port: int = 5140
+    """服务器端口"""
     path: str = ""
+    """服务器部署路径"""
     version: str = "v1"
+    """服务器使用的协议版本"""
     token: str | None = None
+    """服务器访问令牌，如果为 None 则不启用令牌验证"""
     stream_threshold: int = 16 * 1024 * 1024
+    """流式传输阈值，超过此大小将使用流式传输"""
     stream_chunk_size: int = 64 * 1024
+    """流式传输分块大小，流式传输时每次发送的数据大小"""
 
 
 plugin.declare_static()
@@ -106,7 +117,7 @@ def get_asgi() -> Any:
     return server.app
 
 
-def replace_asgi(app: asgi.asgitypes.ASGI3Application) -> DISPOSE:
+def replace_asgi(app: Union[ASGIApp, asgi.asgitypes.ASGI3Application]) -> DISPOSE:
     """
     替换当前的 ASGI 应用
 
@@ -118,10 +129,110 @@ def replace_asgi(app: asgi.asgitypes.ASGI3Application) -> DISPOSE:
         return lambda: None
 
     old_app = server.app
+    old_routes = cast(Starlette, old_app).router.routes.copy()
     server.app = app
+    server.app.router.routes[:0] = old_routes  # type: ignore
 
-    def dispose(_old=old_app):
+    def remove_subsequence(seq, subseq):
+        # 找到子序列的起始索引
+        for i in range(len(seq) - len(subseq) + 1):
+            if seq[i:i + len(subseq)] == subseq:
+                return seq[:i] + seq[i + len(subseq):]
+        return seq  # 如果没找到，返回原序列
+
+    def dispose(_old=old_app, _old_routes=old_routes):
+        server.app.router.routes = remove_subsequence(  # type: ignore
+            cast(Starlette, server.app).router.routes, _old_routes
+        )
         server.app = _old
 
     plugin.collect_disposes(cast(DISPOSE, dispose))
     return cast(DISPOSE, dispose)
+
+
+def add_route(
+    path: str,
+    *,
+    methods: Optional[list[str]] = None,
+    name: Optional[str] = None,
+    include_in_schema: bool = True,
+    **kwargs: Any,
+) -> Callable[[TCallable], TCallable]:
+    """注册一个 ASGI 路由
+
+    Args:
+        path (str): 路由路径
+        methods (list[str], optional): 支持的 HTTP 方法，默认为 None，表示 ["GET"]
+        name (str, optional): 路由名称，默认为 None
+        include_in_schema (bool, optional): 是否包含在 OpenAPI 文档中，默认为 True
+        kwargs (Any): 其他参数，例如 FastAPI 的路由参数
+    """
+
+    def wrapper(endpoint: TCallable, /) -> TCallable:
+        app = cast(Starlette, server.app)
+        fn = getattr(app.router, "add_api_route", app.router.add_route)
+        fn(
+            path, endpoint, methods=methods, name=name, include_in_schema=include_in_schema, **kwargs
+        )
+        route = app.router.routes[-1]
+        plug = plugin.get_plugin(1)
+        plug.collect(lambda: app.router.routes.remove(route))
+        return endpoint
+
+    return wrapper
+
+
+def add_websocket_route(
+    path: str,
+    *,
+    name: Optional[str] = None,
+    **kwargs: Any,
+) -> Callable[[TCallable], TCallable]:
+    """注册一个 ASGI WebSocket 路由
+
+    Args:
+        path (str): 路由路径
+        name (str, optional): 路由名称，默认为 None
+        kwargs (Any): 其他参数，例如 FastAPI 的路由参数
+    """
+
+    def wrapper(endpoint: TCallable, /) -> TCallable:
+        app = cast(Starlette, server.app)
+        fn = getattr(app.router, "add_api_websocket_route", app.router.add_websocket_route)
+        fn(
+            path, endpoint, name=name, **kwargs
+        )
+        route = app.router.routes[-1]
+        plug = plugin.get_plugin(1)
+        plug.collect(lambda: app.router.routes.remove(route))
+        return endpoint
+
+    return wrapper
+
+
+if TYPE_CHECKING:
+    from fastapi import FastAPI
+    from tarina import init_spec
+
+    @init_spec(FastAPI)
+    def replace_fastapi(data: FastAPI) -> DISPOSE:
+        ...
+else:
+    def replace_fastapi(**kwargs):
+        try:
+            from fastapi import FastAPI
+        except ImportError:
+            logger.warning("FastAPI is not installed, cannot replace ASGI app with FastAPI")
+            return lambda: None
+        return replace_asgi(FastAPI(**kwargs))  # type: ignore
+
+__all__ = [
+    "ASGI",
+    "server",
+    "get_asgi",
+    "replace_asgi",
+    "add_route",
+    "add_websocket_route",
+    "replace_fastapi",
+    "Config",
+]

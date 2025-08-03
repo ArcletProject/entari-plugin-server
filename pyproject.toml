@@ -6,8 +6,8 @@ authors = [
     {name = "RF-Tar-Railt", email = "rf_tar_railt@qq.com"},
 ]
 dependencies = [
-    "arclet-entari>=0.12.1",
-    "satori-python-server>=0.16.5",
+    "arclet-entari>=0.13.1",
+    "satori-python-server>=0.16.6",
 ]
 requires-python = ">=3.9"
 readme = "README.md"
@@ -17,6 +17,10 @@ license = {text = "MIT"}
 homepage = "https://github.com/ArcletProject/entari-plugin-server"
 repository = "https://github.com/ArcletProject/entari-plugin-server"
 
+[project.optional-dependencies]
+fastapi = [
+    "fastapi>=0.116.1",
+]
 [build-system]
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
@@ -27,8 +31,9 @@ distribution = true
 
 [tool.pdm.dev-dependencies]
 dev = [
-    "arclet-entari[yaml]>=0.12.1",
+    "arclet-entari[yaml]>=0.13.1",
     "nekobox @ git+https://github.com/wyapx/nekobox.git",
     "satori-python-adapter-onebot11>=0.1.0",
     "satori-python-adapter-console>=0.1.0",
+    "fastapi>=0.116.1",
 ]
