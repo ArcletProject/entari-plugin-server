@@ -6,7 +6,7 @@ from typing_extensions import TypeAlias
 
 from arclet.entari import plugin
 from arclet.entari import logger as log_m
-from arclet.entari.config import BasicConfModel, field
+from arclet.entari.config import BasicConfModel, model_field
 from arclet.letoderea.typing import TCallable
 from graia.amnesia.builtins import asgi
 from satori.server import Adapter, Server
@@ -23,7 +23,7 @@ asgi.LoguruHandler = log_m.LoguruHandler
 class Config(BasicConfModel):
     direct_adapter: bool = False
     """是否使用直连适配器"""
-    adapters: list[dict] = field(default_factory=list)
+    adapters: list[dict] = model_field(default_factory=list)
     """适配器配置列表"""
     host: str = "127.0.0.1"
     """服务器主机地址"""
@@ -45,7 +45,7 @@ plugin.declare_static()
 plugin.metadata(
     "server",
     ["RF-Tar-Railt <rf_tar_railt@qq.com>"],
-    "0.2.1",
+    "0.2.3",
     description="为 Entari 提供 Satori 服务器支持，基于此为 Entari 提供 ASGI 服务、适配器连接等功能",
     urls={
         "homepage": "https://github.com/ArcletProject/entari-plugin-server",
