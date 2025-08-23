@@ -6,7 +6,7 @@ authors = [
     {name = "RF-Tar-Railt", email = "rf_tar_railt@qq.com"},
 ]
 dependencies = [
-    "arclet-entari<0.15.0,>=0.14.0",
+    "arclet-entari<0.16.0,>=0.15.0",
     "satori-python-server>=0.16.6",
 ]
 requires-python = ">=3.9"

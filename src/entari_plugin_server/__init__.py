@@ -44,7 +44,7 @@ class Config(BasicConfModel):
 plugin.declare_static()
 plugin.metadata(
     "server",
-    ["RF-Tar-Railt <rf_tar_railt@qq.com>"],
+    [{"name": "RF-Tar-Railt", "email": "rf_tar_railt@qq.com"}],
     "0.2.3",
     description="为 Entari 提供 Satori 服务器支持，基于此为 Entari 提供 ASGI 服务、适配器连接等功能",
     urls={
@@ -89,13 +89,13 @@ def _load_adapter(adapter_config: dict):
         ext = reduce(getattr, attrs, module)
     except AttributeError:
         for attr in module.__dict__.values():
-            if isinstance(attr, type) and issubclass(attr, Adapter):
+            if isinstance(attr, type) and issubclass(attr, Adapter) and attr is not Adapter:
                 ext = attr
                 break
         else:
             logger.warning(f"Could not find adapter in {module.__name__}")
             return None
-    if isinstance(ext, type) and issubclass(ext, Adapter):
+    if isinstance(ext, type) and issubclass(ext, Adapter) and ext is not Adapter:
         return ext(**{k: (log_m.logger_id if v == "$logger_id" else v) for k, v in adapter_config.items() if k != "$path"})  # type: ignore
     elif isinstance(ext, Adapter):
         return ext
