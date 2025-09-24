@@ -5,7 +5,7 @@
 groups = ["default", "dev", "fastapi"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:64c10829b8f9900b3806983c606607e1a4bc1075c0e3427ddddf8e8ce062158b"
+content_hash = "sha256:18e50c2f8d35131613b96c07ebb694627e6e8691848efe4857a75e9737311f02"
 
 [[metadata.targets]]
 requires_python = ">=3.10"
@@ -1235,31 +1235,31 @@ files = [
 
 [[package]]
 name = "satori-python-adapter-console"
-version = "0.4.0"
+version = "0.4.1"
 requires_python = "<4.0,>=3.10"
 summary = "Satori Protocol SDK for python, adapter for Nonechat"
 groups = ["dev"]
 dependencies = [
     "nonechat<0.7.0,>=0.6.0",
-    "satori-python-server>=0.17.0",
+    "satori-python-server>=0.17.2",
 ]
 files = [
-    {file = "satori_python_adapter_console-0.4.0-py3-none-any.whl", hash = "sha256:bf534cd5f1a651b0395a4279dad758a587eb2c2a267ff2e2aa915ead190bba25"},
-    {file = "satori_python_adapter_console-0.4.0.tar.gz", hash = "sha256:1619d325c393c9001580c356136505639e1f9c424b9facaa31a713a5517cb1df"},
+    {file = "satori_python_adapter_console-0.4.1-py3-none-any.whl", hash = "sha256:a6703b209f13417e2fbb0970348a43e118fac6352f06209eebcbc1ddc5a796b7"},
+    {file = "satori_python_adapter_console-0.4.1.tar.gz", hash = "sha256:592c9761266b76c47e7c78c6a3d18a2eb8335c16e26fe6c6df01c8c37430fbab"},
 ]
 
 [[package]]
 name = "satori-python-adapter-onebot11"
-version = "0.2.0"
+version = "0.2.1"
 requires_python = "<4.0,>=3.10"
 summary = "Satori Protocol SDK for python, adapter for OneBot 11"
 groups = ["dev"]
 dependencies = [
-    "satori-python-server>=0.17.0",
+    "satori-python-server>=0.17.2",
 ]
 files = [
-    {file = "satori_python_adapter_onebot11-0.2.0-py3-none-any.whl", hash = "sha256:f93d502a7ed444437552241ed0ff99313aace7834728153b933e1ded35caa9e5"},
-    {file = "satori_python_adapter_onebot11-0.2.0.tar.gz", hash = "sha256:a99cd61f37ff5d21b930ac60876c232cd1a2b573c1b4ee616390851fa01d2c29"},
+    {file = "satori_python_adapter_onebot11-0.2.1-py3-none-any.whl", hash = "sha256:9ae3b42eecbb1218cbbd9cba1d5253f774ad099a0b12efe8112533dc1cddca64"},
+    {file = "satori_python_adapter_onebot11-0.2.1.tar.gz", hash = "sha256:4dc1ccf5e016876530258a32867279e2227085af6f9f9271e2c5f124551875e5"},
 ]
 
 [[package]]
@@ -1297,7 +1297,7 @@ files = [
 
 [[package]]
 name = "satori-python-server"
-version = "0.17.1"
+version = "0.17.2"
 requires_python = "<4.0,>=3.10"
 summary = "Satori Protocol SDK for python, specify server part"
 groups = ["default", "dev"]
@@ -1311,8 +1311,8 @@ dependencies = [
     "websockets>=15.0.1",
 ]
 files = [
-    {file = "satori_python_server-0.17.1-py3-none-any.whl", hash = "sha256:530ac81bb159f3ce9f4ae36cdbe52511a46728006b486a44cdf3610d05a7b148"},
-    {file = "satori_python_server-0.17.1.tar.gz", hash = "sha256:ac0d2924a03a92de9ff031661049d9dbe695e69aa054148a59e836a34638429d"},
+    {file = "satori_python_server-0.17.2-py3-none-any.whl", hash = "sha256:aae9ae3a902fc6329f4b246ffff597e898015a8bdec2ca7c421b11dc7efa6d76"},
+    {file = "satori_python_server-0.17.2.tar.gz", hash = "sha256:75398b8fc8e196674dc350c77f5bdf3d2d654827cbb9805d33d12afce0a9b47d"},
 ]
 
 [[package]]
