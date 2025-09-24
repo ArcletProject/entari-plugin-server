@@ -6,10 +6,10 @@ authors = [
     {name = "RF-Tar-Railt", email = "rf_tar_railt@qq.com"},
 ]
 dependencies = [
-    "arclet-entari<0.16.0,>=0.15.0",
-    "satori-python-server>=0.16.6",
+    "arclet-entari<0.17.0,>=0.16.0",
+    "satori-python-server<0.18.0,>=0.17.0",
 ]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 readme = "README.md"
 license = {text = "MIT"}
 
@@ -29,11 +29,13 @@ build-backend = "pdm.backend"
 [tool.pdm]
 distribution = true
 
-[tool.pdm.dev-dependencies]
+
+[dependency-groups]
 dev = [
     "arclet-entari[yaml]>=0.13.1",
     "nekobox @ git+https://github.com/wyapx/nekobox.git",
     "satori-python-adapter-onebot11>=0.1.0",
     "satori-python-adapter-console>=0.1.0",
     "fastapi>=0.116.1",
+    "graia-amnesia>=0.11.0",
 ]

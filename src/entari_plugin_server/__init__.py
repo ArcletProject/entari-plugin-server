@@ -8,7 +8,7 @@ from arclet.entari import plugin
 from arclet.entari import logger as log_m
 from arclet.entari.config import BasicConfModel, model_field
 from arclet.letoderea.typing import TCallable
-from graia.amnesia.builtins import asgi
+from graia.amnesia.builtins.asgi import uvicorn, asgitypes
 from satori.server import Adapter, Server
 from starlette.applications import Starlette
 from starlette.types import ASGIApp
@@ -17,7 +17,7 @@ from .patch import DirectAdapterServer, logger
 
 DISPOSE: TypeAlias = Callable[[], None]
 
-asgi.LoguruHandler = log_m.LoguruHandler
+uvicorn.LoguruHandler = log_m.LoguruHandler
 
 
 class Config(BasicConfModel):
@@ -35,6 +35,8 @@ class Config(BasicConfModel):
     """服务器使用的协议版本"""
     token: str | None = None
     """服务器访问令牌，如果为 None 则不启用令牌验证"""
+    options: uvicorn.UvicornOptions | None = None
+    """Uvicorn 的其他配置项"""
     stream_threshold: int = 16 * 1024 * 1024
     """流式传输阈值，超过此大小将使用流式传输"""
     stream_chunk_size: int = 64 * 1024
@@ -57,11 +59,9 @@ plugin.metadata(
 conf = plugin.get_config(Config)
 
 if conf.direct_adapter:
-    server = DirectAdapterServer(conf.host, conf.port, conf.path, conf.version, conf.token, None, conf.stream_threshold, conf.stream_chunk_size)
+    server = DirectAdapterServer(conf.host, conf.port, conf.path, conf.version, conf.token, uvicorn_options=conf.options, stream_threshold=conf.stream_threshold, stream_chunk_size=conf.stream_chunk_size)
 else:
-    server = Server(conf.host, conf.port, conf.path, conf.version, conf.token, None, conf.stream_threshold, conf.stream_chunk_size)
-ASGI = asgi.UvicornASGIService(server.host, server.port)
-
+    server = Server(conf.host, conf.port, conf.path, conf.version, conf.token, uvicorn_options=conf.options, stream_threshold=conf.stream_threshold, stream_chunk_size=conf.stream_chunk_size)
 
 pattern = re.compile(r"(?P<module>[\w.]+)\s*(:\s*(?P<attr>[\w.]+)\s*)?((?P<extras>\[.*\])\s*)?$")
 
@@ -109,7 +109,7 @@ for adapter in adapters:
     logger.debug(f"Applying adapter {adapter}")
     server.apply(adapter)
 
-plugin.add_service(ASGI)
+plugin.add_service(ASGI := server.asgi_service)
 plugin.add_service(server)
 
 
@@ -117,7 +117,7 @@ def get_asgi() -> Any:
     return server.app
 
 
-def replace_asgi(app: Union[ASGIApp, asgi.asgitypes.ASGI3Application]) -> DISPOSE:
+def replace_asgi(app: Union[ASGIApp, asgitypes.ASGI3Application]) -> DISPOSE:
     """
     替换当前的 ASGI 应用
 

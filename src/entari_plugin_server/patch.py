@@ -8,6 +8,7 @@ from satori import Api, Event
 from satori.client import Account, ApiInfo
 from satori.exception import ActionFailed
 from satori.server import Server
+from satori.utils import decode
 from starlette.datastructures import FormData, Headers, UploadFile
 from starlette.requests import Request
 from starlette.responses import JSONResponse
@@ -58,22 +59,22 @@ class DirectAdapterProtocol(EntariProtocol):
             req._json = params or {}
         resp = await self.server.http_server_handler(req)
         if isinstance(resp, JSONResponse):
-            return json.loads(resp.body)  # type: ignore
+            return decode(resp.body)  # type: ignore
         raise ActionFailed(resp.body.decode())  # type: ignore
 
 
 class DirectAdapterServer(Server):
-    async def event_callback(self, event: Event):
+    async def post(self, event: Event):
         app = Entari.current()
         proxy_urls = []
         for provider in self.providers:
             proxy_urls.extend(provider.proxy_urls())
-        await super().event_callback(event)
-        login_sn = f"{event.login.user.id}@{id(self)}"
+        await super().post(event)
+        login_sn = f"{event.login.user.id}@{id(self):x}"
         if login_sn not in app.accounts:
             acc = Account(
                 event.login,
-                ApiInfo(),
+                ApiInfo(),  # type: ignore
                 proxy_urls,
                 DirectAdapterProtocol
             )
