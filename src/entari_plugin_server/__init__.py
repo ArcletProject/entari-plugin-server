@@ -6,41 +6,19 @@ from typing_extensions import TypeAlias
 
 from arclet.entari import plugin
 from arclet.entari import logger as log_m
-from arclet.entari.config import BasicConfModel, model_field
+
 from arclet.letoderea.typing import TCallable
 from graia.amnesia.builtins.asgi import uvicorn, asgitypes
 from satori.server import Adapter, Server
 from starlette.applications import Starlette
 from starlette.types import ASGIApp
 
+from .config import Config
 from .patch import DirectAdapterServer, logger
 
 DISPOSE: TypeAlias = Callable[[], None]
 
 uvicorn.LoguruHandler = log_m.LoguruHandler
-
-
-class Config(BasicConfModel):
-    direct_adapter: bool = False
-    """是否使用直连适配器"""
-    adapters: list[dict] = model_field(default_factory=list)
-    """适配器配置列表"""
-    host: str = "127.0.0.1"
-    """服务器主机地址"""
-    port: int = 5140
-    """服务器端口"""
-    path: str = ""
-    """服务器部署路径"""
-    version: str = "v1"
-    """服务器使用的协议版本"""
-    token: str | None = None
-    """服务器访问令牌，如果为 None 则不启用令牌验证"""
-    options: uvicorn.UvicornOptions | None = None
-    """Uvicorn 的其他配置项"""
-    stream_threshold: int = 16 * 1024 * 1024
-    """流式传输阈值，超过此大小将使用流式传输"""
-    stream_chunk_size: int = 64 * 1024
-    """流式传输分块大小，流式传输时每次发送的数据大小"""
 
 
 plugin.declare_static()
@@ -59,9 +37,9 @@ plugin.metadata(
 conf = plugin.get_config(Config)
 
 if conf.direct_adapter:
-    server = DirectAdapterServer(conf.host, conf.port, conf.path, conf.version, conf.token, uvicorn_options=conf.options, stream_threshold=conf.stream_threshold, stream_chunk_size=conf.stream_chunk_size)
+    server = DirectAdapterServer(conf.host, conf.port, conf.path, conf.version, conf.token, uvicorn_options=conf.options, stream_threshold=conf.stream_threshold, stream_chunk_size=conf.stream_chunk_size)  # type: ignore
 else:
-    server = Server(conf.host, conf.port, conf.path, conf.version, conf.token, uvicorn_options=conf.options, stream_threshold=conf.stream_threshold, stream_chunk_size=conf.stream_chunk_size)
+    server = Server(conf.host, conf.port, conf.path, conf.version, conf.token, uvicorn_options=conf.options, stream_threshold=conf.stream_threshold, stream_chunk_size=conf.stream_chunk_size)  # type: ignore
 
 pattern = re.compile(r"(?P<module>[\w.]+)\s*(:\s*(?P<attr>[\w.]+)\s*)?((?P<extras>\[.*\])\s*)?$")
 
