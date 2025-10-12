@@ -98,6 +98,8 @@ class UvicornOptions(TypedDict, total=False):
 class Config(BasicConfModel):
     direct_adapter: bool = False
     """是否使用直连适配器"""
+    transfer_client: bool = False
+    """是否将 Entari 客户端收到的事件转发给连接到 server 的其他 Satori 客户端"""
     adapters: list[dict] = model_field(default_factory=list)
     """适配器配置列表"""
     host: str = "127.0.0.1"

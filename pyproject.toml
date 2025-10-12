@@ -6,7 +6,7 @@ authors = [
     {name = "RF-Tar-Railt", email = "rf_tar_railt@qq.com"},
 ]
 dependencies = [
-    "arclet-entari<0.17.0,>=0.16.0",
+    "arclet-entari<0.17.0,>=0.16.5",
     "satori-python-server<0.18.0,>=0.17.2",
 ]
 requires-python = ">=3.10"
@@ -34,7 +34,7 @@ distribution = true
 dev = [
     "arclet-entari[yaml]>=0.13.1",
     "nekobox @ git+https://github.com/wyapx/nekobox.git",
-    "satori-python-adapter-onebot11>=0.1.0",
+    "satori-python-adapter-onebot11>=0.2.2",
     "satori-python-adapter-console>=0.1.0",
     "fastapi>=0.116.1",
     "graia-amnesia>=0.11.2",

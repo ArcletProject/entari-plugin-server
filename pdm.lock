@@ -5,7 +5,7 @@
 groups = ["default", "dev", "fastapi"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:18e50c2f8d35131613b96c07ebb694627e6e8691848efe4857a75e9737311f02"
+content_hash = "sha256:e17fbdfe6a08de30903c9039bc54f19950a7f0ca761cd9f75518a1542f818ca1"
 
 [[metadata.targets]]
 requires_python = ">=3.10"
@@ -199,7 +199,7 @@ files = [
 
 [[package]]
 name = "arclet-entari"
-version = "0.16.3"
+version = "0.16.5"
 requires_python = ">=3.10"
 summary = "Simple IM Framework based on satori-python"
 groups = ["default", "dev"]
@@ -212,24 +212,24 @@ dependencies = [
     "satori-python-core>=0.17.3",
 ]
 files = [
-    {file = "arclet_entari-0.16.3-py3-none-any.whl", hash = "sha256:90f18e6e557c42978467ef7f9a415e92170a9cf87f25e4af90758700fa964dc9"},
-    {file = "arclet_entari-0.16.3.tar.gz", hash = "sha256:cd7d5ff40cbb4246c3b1c13bd9d6535ecab41f2af3478a81f79606ac62af0fcc"},
+    {file = "arclet_entari-0.16.5-py3-none-any.whl", hash = "sha256:2295c884cfe3b3e9be0e67e04ced140c7381c99430b54322600b0955e2e38133"},
+    {file = "arclet_entari-0.16.5.tar.gz", hash = "sha256:222e80f073fc709f559dac58655b26b4bbc668267f34c966b9a2f4004d224f2c"},
 ]
 
 [[package]]
 name = "arclet-entari"
-version = "0.16.3"
+version = "0.16.5"
 extras = ["yaml"]
 requires_python = ">=3.10"
 summary = "Simple IM Framework based on satori-python"
 groups = ["dev"]
 dependencies = [
-    "arclet-entari==0.16.3",
+    "arclet-entari==0.16.5",
     "ruamel-yaml>=0.18.10",
 ]
 files = [
-    {file = "arclet_entari-0.16.3-py3-none-any.whl", hash = "sha256:90f18e6e557c42978467ef7f9a415e92170a9cf87f25e4af90758700fa964dc9"},
-    {file = "arclet_entari-0.16.3.tar.gz", hash = "sha256:cd7d5ff40cbb4246c3b1c13bd9d6535ecab41f2af3478a81f79606ac62af0fcc"},
+    {file = "arclet_entari-0.16.5-py3-none-any.whl", hash = "sha256:2295c884cfe3b3e9be0e67e04ced140c7381c99430b54322600b0955e2e38133"},
+    {file = "arclet_entari-0.16.5.tar.gz", hash = "sha256:222e80f073fc709f559dac58655b26b4bbc668267f34c966b9a2f4004d224f2c"},
 ]
 
 [[package]]
@@ -436,7 +436,7 @@ files = [
 
 [[package]]
 name = "fastapi"
-version = "0.117.1"
+version = "0.119.0"
 requires_python = ">=3.8"
 summary = "FastAPI framework, high performance, easy to learn, fast to code, ready for production"
 groups = ["dev", "fastapi"]
@@ -446,8 +446,8 @@ dependencies = [
     "typing-extensions>=4.8.0",
 ]
 files = [
-    {file = "fastapi-0.117.1-py3-none-any.whl", hash = "sha256:33c51a0d21cab2b9722d4e56dbb9316f3687155be6b276191790d8da03507552"},
-    {file = "fastapi-0.117.1.tar.gz", hash = "sha256:fb2d42082d22b185f904ca0ecad2e195b851030bd6c5e4c032d1c981240c631a"},
+    {file = "fastapi-0.119.0-py3-none-any.whl", hash = "sha256:90a2e49ed19515320abb864df570dd766be0662c5d577688f1600170f7f73cf2"},
+    {file = "fastapi-0.119.0.tar.gz", hash = "sha256:451082403a2c1f0b99c6bd57c09110ed5463856804c8078d38e5a1f1035dbbb7"},
 ]
 
 [[package]]
@@ -538,7 +538,7 @@ files = [
 
 [[package]]
 name = "graia-amnesia"
-version = "0.11.2"
+version = "0.11.4"
 requires_python = "<4.0,>=3.10"
 summary = "a collection of shared components for graia"
 groups = ["default", "dev"]
@@ -547,26 +547,26 @@ dependencies = [
     "typing-extensions>=4.0.0",
 ]
 files = [
-    {file = "graia_amnesia-0.11.2-py3-none-any.whl", hash = "sha256:7b631a81538e4d3992bf0edd25b9d914d83cb5a9ffe17e9aa46733da54e8717a"},
-    {file = "graia_amnesia-0.11.2.tar.gz", hash = "sha256:2b97f5e31d511e21809ea9333cd173a8f6a6de1032233526264a4a8c470ad1b5"},
+    {file = "graia_amnesia-0.11.4-py3-none-any.whl", hash = "sha256:3d45d35f459a9f99363e6e19c5c9548832057fca4367b63d58c79c4ff03d431d"},
+    {file = "graia_amnesia-0.11.4.tar.gz", hash = "sha256:7725d5ebe70d3ce973430c585df608254701e0ee840c5a5b9f7ceb252f4b47f4"},
 ]
 
 [[package]]
 name = "graia-amnesia"
-version = "0.11.2"
+version = "0.11.4"
 extras = ["uvicorn"]
 requires_python = "<4.0,>=3.10"
 summary = "a collection of shared components for graia"
 groups = ["default", "dev"]
 dependencies = [
-    "graia-amnesia==0.11.2",
+    "graia-amnesia==0.11.4",
     "uvicorn>=0.35.0",
     "uvloop>=0.18.0; sys_platform != \"win32\"",
     "websockets>=15.0.1",
 ]
 files = [
-    {file = "graia_amnesia-0.11.2-py3-none-any.whl", hash = "sha256:7b631a81538e4d3992bf0edd25b9d914d83cb5a9ffe17e9aa46733da54e8717a"},
-    {file = "graia_amnesia-0.11.2.tar.gz", hash = "sha256:2b97f5e31d511e21809ea9333cd173a8f6a6de1032233526264a4a8c470ad1b5"},
+    {file = "graia_amnesia-0.11.4-py3-none-any.whl", hash = "sha256:3d45d35f459a9f99363e6e19c5c9548832057fca4367b63d58c79c4ff03d431d"},
+    {file = "graia_amnesia-0.11.4.tar.gz", hash = "sha256:7725d5ebe70d3ce973430c585df608254701e0ee840c5a5b9f7ceb252f4b47f4"},
 ]
 
 [[package]]
@@ -1250,7 +1250,7 @@ files = [
 
 [[package]]
 name = "satori-python-adapter-onebot11"
-version = "0.2.1"
+version = "0.2.4"
 requires_python = "<4.0,>=3.10"
 summary = "Satori Protocol SDK for python, adapter for OneBot 11"
 groups = ["dev"]
@@ -1258,8 +1258,8 @@ dependencies = [
     "satori-python-server>=0.17.2",
 ]
 files = [
-    {file = "satori_python_adapter_onebot11-0.2.1-py3-none-any.whl", hash = "sha256:9ae3b42eecbb1218cbbd9cba1d5253f774ad099a0b12efe8112533dc1cddca64"},
-    {file = "satori_python_adapter_onebot11-0.2.1.tar.gz", hash = "sha256:4dc1ccf5e016876530258a32867279e2227085af6f9f9271e2c5f124551875e5"},
+    {file = "satori_python_adapter_onebot11-0.2.4-py3-none-any.whl", hash = "sha256:999272d0b7d76655e31cfca96a578dbffc38f0afc54bbb7db0aa5d4f89d7a347"},
+    {file = "satori_python_adapter_onebot11-0.2.4.tar.gz", hash = "sha256:709455dfe178ec882d4782f3273ea173a00a0cf8759a96d60ca219152c6e242b"},
 ]
 
 [[package]]
@@ -1297,7 +1297,7 @@ files = [
 
 [[package]]
 name = "satori-python-server"
-version = "0.17.2"
+version = "0.17.5"
 requires_python = "<4.0,>=3.10"
 summary = "Satori Protocol SDK for python, specify server part"
 groups = ["default", "dev"]
@@ -1311,8 +1311,8 @@ dependencies = [
     "websockets>=15.0.1",
 ]
 files = [
-    {file = "satori_python_server-0.17.2-py3-none-any.whl", hash = "sha256:aae9ae3a902fc6329f4b246ffff597e898015a8bdec2ca7c421b11dc7efa6d76"},
-    {file = "satori_python_server-0.17.2.tar.gz", hash = "sha256:75398b8fc8e196674dc350c77f5bdf3d2d654827cbb9805d33d12afce0a9b47d"},
+    {file = "satori_python_server-0.17.5-py3-none-any.whl", hash = "sha256:6386c650b53747fa5d6878dadacf1c425fd08f3b50da6c620ce8d506d35b6346"},
+    {file = "satori_python_server-0.17.5.tar.gz", hash = "sha256:c920d24e094847a338de12fc4473249f5137a8601d75e85523c36427b102911a"},
 ]
 
 [[package]]

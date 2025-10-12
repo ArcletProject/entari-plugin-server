@@ -15,6 +15,7 @@ from starlette.types import ASGIApp
 
 from .config import Config
 from .patch import DirectAdapterServer, logger
+from ._adapter import EntariAdapter
 
 DISPOSE: TypeAlias = Callable[[], None]
 
@@ -86,6 +87,10 @@ adapters: list[Adapter] = [*filter(None, map(_load_adapter, conf.adapters))]
 for adapter in adapters:
     logger.debug(f"Applying adapter {adapter}")
     server.apply(adapter)
+
+if conf.transfer_client:
+    logger.debug("Applying Client Event Transfer")
+    server.apply(EntariAdapter())
 
 plugin.add_service(ASGI := server.asgi_service)
 plugin.add_service(server)
