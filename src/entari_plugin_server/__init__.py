@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING, Any, Callable, Optional, Union, cast
 from typing_extensions import TypeAlias
 
 from arclet.entari import plugin
+from arclet.entari.config import EntariConfig
 from arclet.entari import logger as log_m
 
 from arclet.letoderea.typing import TCallable
@@ -26,7 +27,7 @@ plugin.declare_static()
 plugin.metadata(
     "server",
     [{"name": "RF-Tar-Railt", "email": "rf_tar_railt@qq.com"}],
-    "0.5.0",
+    "0.5.1",
     description="为 Entari 提供 Satori 服务器支持，基于此为 Entari 提供 ASGI 服务、适配器连接等功能",
     urls={
         "homepage": "https://github.com/ArcletProject/entari-plugin-server",
@@ -82,7 +83,7 @@ def _load_adapter(adapter_config: dict):
     return None
 
 
-adapters: list[Adapter] = [*filter(None, map(_load_adapter, conf.adapters))]
+adapters: list[Adapter] = [*filter(None, map(_load_adapter, conf.adapters + EntariConfig.instance.data.get("adapters", [])))]
 
 for adapter in adapters:
     logger.debug(f"Applying adapter {adapter}")

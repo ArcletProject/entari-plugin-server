@@ -15,6 +15,20 @@ plugins:
     port: 5140
 ```
 
+或者
+
+```yaml
+adapters:
+  - $path: package.module:AdapterClass
+    # Following are adapter's configuration
+    key1: value1
+    key2: value2
+plugins:
+  server:
+    host: 127.0.0.1
+    port: 5140
+```
+
 ## 插件配置项
 
 - `direct_adapter`: 是否使用直连适配器。

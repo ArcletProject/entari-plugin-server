@@ -10,7 +10,7 @@ class UvicornOptions(TypedDict, total=False):
     """Bind to a UNIX domain socket. default: None"""
     fd: int | None
     """Bind to socket from this file descriptor. default: None"""
-    loop: Literal["none", "auto", "asyncio", "uvloop"]
+    loop: Literal["none", "auto", "asyncio", "uvloop", "winloop"]
     """Event loop factory implementation. default: 'auto'"""
     http: HTTPProtocolType
     """HTTP protocol implementation. default: 'auto'"""
