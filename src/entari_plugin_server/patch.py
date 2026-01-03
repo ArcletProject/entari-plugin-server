@@ -74,7 +74,7 @@ class DirectAdapterServer(Server):
         if login_sn not in app.accounts:
             acc = Account(
                 event.login,
-                ApiInfo(),  # type: ignore
+                ApiInfo(self.host, self.port, self.path, self.token),  # type: ignore
                 proxy_urls,
                 DirectAdapterProtocol
             )
@@ -82,5 +82,6 @@ class DirectAdapterServer(Server):
             app.accounts[login_sn] = acc
             logger.info(f"account added: {acc}")
         else:
-            acc = app.accounts[login_sn]
+            acc = app.accounts[login_sn].custom(protocol_cls=DirectAdapterProtocol)
+            acc.protocol.server = self
         await app.handle_event(acc, event)
