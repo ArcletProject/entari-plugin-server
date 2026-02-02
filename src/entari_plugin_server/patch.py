@@ -1,4 +1,3 @@
-import json
 from io import BytesIO
 
 from arclet.entari import Entari
@@ -6,7 +5,15 @@ from arclet.entari.logger import log
 from arclet.entari.session import EntariProtocol
 from satori import Api, Event
 from satori.client import Account, ApiInfo
-from satori.exception import ActionFailed
+from satori.exception import (
+    ActionFailed,
+    BadRequestException,
+    UnauthorizedException,
+    ForbiddenException,
+    NotFoundException,
+    MethodNotAllowedException,
+    ServerException
+)
 from satori.server import Server
 from satori.utils import decode
 from starlette.datastructures import FormData, Headers, UploadFile
@@ -60,7 +67,24 @@ class DirectAdapterProtocol(EntariProtocol):
         resp = await self.server.http_server_handler(req)
         if isinstance(resp, JSONResponse):
             return decode(resp.body)  # type: ignore
-        raise ActionFailed(resp.body.decode())  # type: ignore
+        content = resp.body.decode()  # type: ignore
+        match resp.status_code:
+            case x if 200 <= x < 300:
+                return decode(content) if content else {}
+            case 400:
+                raise BadRequestException(content)
+            case 401:
+                raise UnauthorizedException(content)
+            case 403:
+                raise ForbiddenException(content)
+            case 404:
+                raise NotFoundException(content)
+            case 405:
+                raise MethodNotAllowedException(content)
+            case x if x >= 500:
+                raise ServerException(content)
+            case _:
+                raise ActionFailed(content)
 
 
 class DirectAdapterServer(Server):
@@ -70,7 +94,7 @@ class DirectAdapterServer(Server):
         for provider in self.providers:
             proxy_urls.extend(provider.proxy_urls())
         await super().post(event)
-        login_sn = f"{event.login.user.id}@{id(self):x}"
+        login_sn = f"{event.login.platform}_{event.login.user.id}@{id(self):x}"
         if login_sn not in app.accounts:
             acc = Account(
                 event.login,

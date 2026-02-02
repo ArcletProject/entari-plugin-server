@@ -1,11 +1,16 @@
 import re
+import inspect
+from dataclasses import make_dataclass, field
 from functools import reduce
 from importlib import import_module
 from typing import TYPE_CHECKING, Any, Callable, Optional, Union, cast
+
+from arclet.entari.config.models.default import BasicConfModel
 from typing_extensions import TypeAlias
 
 from arclet.entari import plugin
 from arclet.entari.config import EntariConfig
+from arclet.entari.config import config_model_validate
 from arclet.entari import logger as log_m
 
 from arclet.letoderea.typing import TCallable
@@ -76,7 +81,21 @@ def _load_adapter(adapter_config: dict):
             logger.warning(f"Could not find adapter in {module.__name__}")
             return None
     if isinstance(ext, type) and issubclass(ext, Adapter) and ext is not Adapter:
-        return ext(**{k: (log_m.logger_id if v == "$logger_id" else v) for k, v in adapter_config.items() if k != "$path"})  # type: ignore
+        args: dict = {k: (log_m.logger_id if v == "$logger_id" else v) for k, v in adapter_config.items()}
+        sig = inspect.signature(ext.__init__)
+        filtered_args = {k: v for k, v in args.items() if k in sig.parameters}
+        annos = inspect.get_annotations(ext.__init__, globals=module.__dict__, locals=globals(), eval_str=True)
+        dcls = make_dataclass(
+            "AdapterConfig",
+            [
+                (param.name, annos.get(param.name, sig.empty), field(default_factory=lambda p=param: p.default))
+                for param in sig.parameters.values()
+                if param.name != "self"
+            ],
+            bases=(BasicConfModel,),
+        )
+        dcls_instance = config_model_validate(dcls, filtered_args)
+        return ext(**vars(dcls_instance))
     elif isinstance(ext, Adapter):
         return ext
     logger.warning(f"Invalid adapter in {module.__name__}")
