@@ -44,7 +44,7 @@ plugins:
 - `port`: 服务器端口，默认为 `5140`
 - `path`: 服务器部署路径，默认为空字符串 `""`
 - `version`: 服务器使用的协议版本，默认为 `v1`
-- `token`: 服务器访问令牌，如果为 `None` 则不启用令牌验证，默认为 `None`
+- `token`: 服务器 Satori 接口的访问令牌，如果为 `None` 则不启用令牌验证，默认为 `None`
 - `options`: Uvicorn 的其他配置项，默认为 `None`。此处参考 [Uvicorn 配置项](https://www.uvicorn.org/settings/)
 - `stream_threshold`: 流式传输阈值，超过此大小将使用流式传输，默认为 `16 * 1024 * 1024` (16MB)
 - `stream_chunk_size`: 流式传输分块大小，流式传输时每次发送的数据大小，默认为 `64 * 1024` (64KB)
@@ -79,12 +79,14 @@ pip install satori-python-adapter-onebot11
 **配置(正向)**：
 - `endpoint`: 连接 OneBot V11协议端的路径
 - `access_token`: OneBot V11协议的访问令牌, 默认为空
+- `timeout`: 发送请求的超时时间，默认为 30 秒
 
 **配置(反向)**：
 - `prefix`: 反向适配器于 Server 的路径前缀, 默认为 `/`
 - `path`: 反向适配器于 Server 的路径, 默认为 `onebot/v11`
 - `endpoint`: 反向适配器于 Server 的路径端点, 默认为 `ws` (完整路径即为 `/onebot/v11/ws`)
 - `access_token`: 反向适配器的访问令牌, 默认为空
+- `timeout`: 发送请求的超时时间，默认为 30 秒
 
 ### Console 适配器
 
@@ -105,9 +107,15 @@ pip install satori-python-adapter-console
 pip install satori-python-adapter-milky
 ```
 
-**路径(`$path`)**： `@milky.main` 或 `@milky.webhook` (websocket 或 webhook 适配器)
+**路径(`$path`)**： `@milky.main`, `@milky.webhook` 或 `@milky.sse` (websocket, webhook 或 sse 适配器)
 
 **配置(Websocket)**：
+- `endpoint`: 连接 Milky 协议端的路径
+- `token`: Milky 协议的访问令牌, 默认为空
+- `token_in_query`: 是否将 token 放在查询参数中, 默认为`False`
+- `headers`: 连接时使用的自定义请求头, 默认为空字典
+
+**配置(SSE)**：
 - `endpoint`: 连接 Milky 协议端的路径
 - `token`: Milky 协议的访问令牌, 默认为空
 - `token_in_query`: 是否将 token 放在查询参数中, 默认为`False`

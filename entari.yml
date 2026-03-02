@@ -1,0 +1,44 @@
+# $schema: ./entari.schema.json
+basic:
+#  network:
+#    - type: websocket
+#      host: 127.0.0.1
+#      port: 9555
+#      path: "satori"
+#    - type: websocket
+#      host: "127.0.0.1"
+#      port: 5140
+#      path: "satori"
+  ignore_self_message: true
+  prefix: ["/"]
+  log:
+    level: "debug"
+  schema: true
+plugins:
+  .record_message:
+    record_send: true
+  ::auto_reload:
+    watch_config: true
+  ::echo: {}
+  ::inspect: {}
+  server:
+    host: 127.0.0.1
+    port: 9555
+    path: "satori"
+    direct_adapter: true
+    transfer_client: false
+    adapters:
+      - $path: '@onebot11.reverse'
+        endpoint: "ws"
+#      - $path: '@console'
+      - $path: '@qq.websocket'
+        app_id: ${{ env.QQ_APP_ID }}
+        secret: ${{ env.QQ_SECRET }}
+        token: ${{ env.QQ_TOKEN }}
+        intent:
+          guild_messages: true
+          direct_message: true
+          message_audit: true
+          at_messages: false
+          c2c_group_at_messages: true
+        is_sandbox: false

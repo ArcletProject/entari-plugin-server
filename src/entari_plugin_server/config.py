@@ -111,7 +111,7 @@ class Config(BasicConfModel):
     version: str = "v1"
     """服务器使用的协议版本"""
     token: str | None = None
-    """服务器访问令牌，如果为 None 则不启用令牌验证"""
+    """服务器 Satori 接口的访问令牌，如果为 None 则不启用令牌验证"""
     options: UvicornOptions | None = None
     """Uvicorn 的其他配置项"""
     stream_threshold: int = 16 * 1024 * 1024
