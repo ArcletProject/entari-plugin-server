@@ -1,10 +1,10 @@
 # $schema: ./entari.schema.json
 basic:
-#  network:
-#    - type: websocket
-#      host: 127.0.0.1
-#      port: 9555
-#      path: "satori"
+  network:
+    - type: ws
+      host: 127.0.0.1
+      port: 9555
+      path: "satori"
 #    - type: websocket
 #      host: "127.0.0.1"
 #      port: 5140

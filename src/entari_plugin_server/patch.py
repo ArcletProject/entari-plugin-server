@@ -104,7 +104,7 @@ class DirectAdapterServer(Server):
             )
             acc.protocol.server = self
             app.accounts[login_sn] = acc
-            logger.info(f"account added: {acc}")
+            logger.debug(f"account added: {acc}")
         else:
             acc = app.accounts[login_sn].custom(protocol_cls=DirectAdapterProtocol)
             acc.protocol.server = self

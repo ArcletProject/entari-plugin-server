@@ -5,7 +5,7 @@
 groups = ["default", "dev", "fastapi"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:fe06a1846f897e398893411d2968a1c085a41b3fdad81044a42f66e0fa9ca5db"
+content_hash = "sha256:fc8465cfe3e5671c0c933b8878c92042e9025f3ade7c795ada0e1bf4fe170c0c"
 
 [[metadata.targets]]
 requires_python = ">=3.10"
@@ -179,7 +179,7 @@ files = [
 
 [[package]]
 name = "arclet-alconna"
-version = "1.8.43"
+version = "1.8.44"
 requires_python = ">=3.9"
 summary = "A High-performance, Generality, Humane Command Line Arguments Parser Library."
 groups = ["default", "dev"]
@@ -189,8 +189,8 @@ dependencies = [
     "typing-extensions>=4.5.0",
 ]
 files = [
-    {file = "arclet_alconna-1.8.43-py3-none-any.whl", hash = "sha256:fd38ee4ca6404f7b698be8d9ec47248f9a95008d4d80c824375811ef5183d2c6"},
-    {file = "arclet_alconna-1.8.43.tar.gz", hash = "sha256:23c89d334f4d44e2130f1abc63d8641ac39be9009be023ebd08c2739bbef42c9"},
+    {file = "arclet_alconna-1.8.44-py3-none-any.whl", hash = "sha256:96a7e33da17df4befdd5068a52aa4923267bc47439067cd96ddefd06985a5e6f"},
+    {file = "arclet_alconna-1.8.44.tar.gz", hash = "sha256:9bf30c35eab42e27a6b10dc8ce8a76b6f8824d9cca6875e39122739c3b7b5363"},
 ]
 
 [[package]]
@@ -210,45 +210,45 @@ files = [
 
 [[package]]
 name = "arclet-entari"
-version = "0.17.0"
+version = "0.18.0rc1"
 requires_python = ">=3.10"
 summary = "Simple IM Framework based on satori-python"
 groups = ["default", "dev"]
 dependencies = [
     "arclet-alconna-tools>=0.7.3",
-    "arclet-alconna<2.0.0,>=1.8.42",
-    "arclet-letoderea<0.21.0,>=0.20.7",
+    "arclet-alconna<2.0.0,>=1.8.44",
+    "arclet-letoderea<0.22.0,>=0.21.1",
     "nonestorage>=0.1.0",
-    "satori-python-client<1.4.0,>=1.3.0",
-    "satori-python-core<1.4.0,>=1.3.0",
+    "satori-python-client<1.4.0,>=1.3.2",
+    "satori-python-core<1.4.0,>=1.3.2",
     "simpleeval>=1.0.3",
 ]
 files = [
-    {file = "arclet_entari-0.17.0-py3-none-any.whl", hash = "sha256:164b2679c1e5921a5da41686437a8512de3791beb3e68a71609c06ab0fa257d4"},
-    {file = "arclet_entari-0.17.0.tar.gz", hash = "sha256:0f66c1e250a48b171df69228f67ff4c5cec87117e1761eb72cf1a2b4594e74bb"},
+    {file = "arclet_entari-0.18.0rc1-py3-none-any.whl", hash = "sha256:c0ef7a3b8253e7aefdb786614986a9aee3b29e8452dafc2b4069c7c43c8ac0ae"},
+    {file = "arclet_entari-0.18.0rc1.tar.gz", hash = "sha256:15d1acb9b70048a1e0a4ea69af156e46e7834b33c2ce2356e730cfad3466a599"},
 ]
 
 [[package]]
 name = "arclet-entari"
-version = "0.17.0"
+version = "0.18.0rc1"
 extras = ["dotenv", "reload", "yaml"]
 requires_python = ">=3.10"
 summary = "Simple IM Framework based on satori-python"
 groups = ["dev"]
 dependencies = [
-    "arclet-entari==0.17.0",
+    "arclet-entari==0.18.0rc1",
     "python-dotenv>=1.0.1",
     "ruamel-yaml>=0.18.10",
     "watchfiles>=1.0.3",
 ]
 files = [
-    {file = "arclet_entari-0.17.0-py3-none-any.whl", hash = "sha256:164b2679c1e5921a5da41686437a8512de3791beb3e68a71609c06ab0fa257d4"},
-    {file = "arclet_entari-0.17.0.tar.gz", hash = "sha256:0f66c1e250a48b171df69228f67ff4c5cec87117e1761eb72cf1a2b4594e74bb"},
+    {file = "arclet_entari-0.18.0rc1-py3-none-any.whl", hash = "sha256:c0ef7a3b8253e7aefdb786614986a9aee3b29e8452dafc2b4069c7c43c8ac0ae"},
+    {file = "arclet_entari-0.18.0rc1.tar.gz", hash = "sha256:15d1acb9b70048a1e0a4ea69af156e46e7834b33c2ce2356e730cfad3466a599"},
 ]
 
 [[package]]
 name = "arclet-letoderea"
-version = "0.20.7"
+version = "0.21.1"
 requires_python = "<4.0,>=3.10"
 summary = "A high-performance, simple-structured event system, relies on asyncio"
 groups = ["default", "dev"]
@@ -257,8 +257,8 @@ dependencies = [
     "typing-extensions>=4.12.0",
 ]
 files = [
-    {file = "arclet_letoderea-0.20.7-py3-none-any.whl", hash = "sha256:be9586a5a22808ead25e7f8ae4bfef86a471d645edc9f2203598422598f51f08"},
-    {file = "arclet_letoderea-0.20.7.tar.gz", hash = "sha256:7d5f2a0b83ee971c083c0e531ae5824dbd7ae09996d954291dbf946766458f13"},
+    {file = "arclet_letoderea-0.21.1-py3-none-any.whl", hash = "sha256:18df0fdd4adfc4f345c0f57137226472896f950ccd856451972684ee56952cd8"},
+    {file = "arclet_letoderea-0.21.1.tar.gz", hash = "sha256:5d5addc5901e4e1873dbe405fd2bfb2e83a7efa98714528cfd6aa5f1ea6a3159"},
 ]
 
 [[package]]
@@ -487,20 +487,20 @@ files = [
 
 [[package]]
 name = "fastapi"
-version = "0.135.1"
+version = "0.136.1"
 requires_python = ">=3.10"
 summary = "FastAPI framework, high performance, easy to learn, fast to code, ready for production"
 groups = ["dev", "fastapi"]
 dependencies = [
     "annotated-doc>=0.0.2",
-    "pydantic>=2.7.0",
+    "pydantic>=2.9.0",
     "starlette>=0.46.0",
     "typing-extensions>=4.8.0",
     "typing-inspection>=0.4.2",
 ]
 files = [
-    {file = "fastapi-0.135.1-py3-none-any.whl", hash = "sha256:46e2fc5745924b7c840f71ddd277382af29ce1cdb7d5eab5bf697e3fb9999c9e"},
-    {file = "fastapi-0.135.1.tar.gz", hash = "sha256:d04115b508d936d254cea545b7312ecaa58a7b3a0f84952535b4c9afae7668cd"},
+    {file = "fastapi-0.136.1-py3-none-any.whl", hash = "sha256:a6e9d7eeada96c93a4d69cb03836b44fa34e2854accb7244a1ece36cd4781c3f"},
+    {file = "fastapi-0.136.1.tar.gz", hash = "sha256:7af665ad7acfa0a3baf8983d393b6b471b9da10ede59c60045f49fbc89a0fa7f"},
 ]
 
 [[package]]
@@ -1198,7 +1198,7 @@ files = [
 
 [[package]]
 name = "satori-python"
-version = "1.3.0"
+version = "1.3.4"
 requires_python = "<4.0,>=3.10"
 summary = "Satori Protocol SDK for python"
 groups = ["dev"]
@@ -1215,57 +1215,57 @@ dependencies = [
     "yarl>=1.9.4",
 ]
 files = [
-    {file = "satori_python-1.3.0-py3-none-any.whl", hash = "sha256:5372d487c87b909e83479494c2a377b0e3b090a97acf31c12b3c7b3a5a4eaf1c"},
-    {file = "satori_python-1.3.0.tar.gz", hash = "sha256:bebc076ec216e94827bca840317df83a131b1af9f5c4b513aed23fc532f06eac"},
+    {file = "satori_python-1.3.4-py3-none-any.whl", hash = "sha256:423bffde62e05acf0b3d93002d8044634b7b9606a6a6a61eef8931e32576a4bc"},
+    {file = "satori_python-1.3.4.tar.gz", hash = "sha256:435a233bc5084d99fa82b90197426f2ce61b43e5a2939144d7fada1f4d0b8fcf"},
 ]
 
 [[package]]
 name = "satori-python-adapter-console"
-version = "0.5.1"
+version = "0.5.3"
 requires_python = "<4.0,>=3.10"
 summary = "Satori Protocol SDK for python, adapter for Nonechat"
 groups = ["dev"]
 dependencies = [
     "nonechat<0.7.0,>=0.6.0",
-    "satori-python-server<1.4.0,>=1.3.0",
+    "satori-python-server<1.4.0,>=1.3.3",
 ]
 files = [
-    {file = "satori_python_adapter_console-0.5.1-py3-none-any.whl", hash = "sha256:e5dce2d2f76c8b23ac417dd3d91fc731b0f33e88be64c11bcde6bb862dadc4c7"},
-    {file = "satori_python_adapter_console-0.5.1.tar.gz", hash = "sha256:55b61b80f6f3c41d4ddfdf03b7e4e0b8b451fff7a084bd6a7b186a55663ad6d6"},
+    {file = "satori_python_adapter_console-0.5.3-py3-none-any.whl", hash = "sha256:b449a8d336b7791baefaf95f3b84d8d314014302f15d2d660d79827215566af1"},
+    {file = "satori_python_adapter_console-0.5.3.tar.gz", hash = "sha256:381d7b82e6c7836ccb0ba233c24094b50919cc796208f57f93a63366113e3a17"},
 ]
 
 [[package]]
 name = "satori-python-adapter-onebot11"
-version = "0.4.1"
+version = "0.4.4"
 requires_python = "<4.0,>=3.10"
 summary = "Satori Protocol SDK for python, adapter for OneBot 11"
 groups = ["dev"]
 dependencies = [
-    "satori-python-server<1.4.0,>=1.3.0",
+    "satori-python-server<1.4.0,>=1.3.3",
 ]
 files = [
-    {file = "satori_python_adapter_onebot11-0.4.1-py3-none-any.whl", hash = "sha256:24aa2b910ce887d1131f5e60c2e9f16ef9268f064c48d81e32f109f504c47e7e"},
-    {file = "satori_python_adapter_onebot11-0.4.1.tar.gz", hash = "sha256:2b4d1fd817cd4c5a871dbcc5e782f7bbfae10acf8860bbb9290e161d6a27b27d"},
+    {file = "satori_python_adapter_onebot11-0.4.4-py3-none-any.whl", hash = "sha256:259f7e6b3704314d23f2717347e3b50a176ff4d8570aac3a4d106907c2dc3b18"},
+    {file = "satori_python_adapter_onebot11-0.4.4.tar.gz", hash = "sha256:455e3fbadaca9dc0089a075a1dac9417218d0ddfc65cb5af4b0f459cc9b9edda"},
 ]
 
 [[package]]
 name = "satori-python-adapter-qq"
-version = "0.2.0"
+version = "0.4.0rc4"
 requires_python = "<4.0,>=3.10"
 summary = "Satori Protocol SDK for python, adapter for QQ"
 groups = ["dev"]
 dependencies = [
     "cryptography>=46.0.4",
-    "satori-python<1.4.0,>=1.3.0",
+    "satori-python<1.4.0,>=1.3.3",
 ]
 files = [
-    {file = "satori_python_adapter_qq-0.2.0-py3-none-any.whl", hash = "sha256:8b6effc8077eec32abb6fef8f9d3984434257ce1a7c168dafeafb21ffaa59142"},
-    {file = "satori_python_adapter_qq-0.2.0.tar.gz", hash = "sha256:306daea61b7ea11c25b1aef93fd390bfd25569c664e511255a646de3f60a5a3d"},
+    {file = "satori_python_adapter_qq-0.4.0rc4-py3-none-any.whl", hash = "sha256:670db49dbd45f4a6644032b1c839e4bc9a530467448f72d2ef5c13782b1a2d40"},
+    {file = "satori_python_adapter_qq-0.4.0rc4.tar.gz", hash = "sha256:1c065164141bc57fbd1098632389fcd204c6ef6cbcf5902cab0d05de0b90b566"},
 ]
 
 [[package]]
 name = "satori-python-client"
-version = "1.3.0"
+version = "1.3.4"
 requires_python = "<4.0,>=3.10"
 summary = "Satori Protocol SDK for python, specify client part"
 groups = ["default", "dev"]
@@ -1273,32 +1273,32 @@ dependencies = [
     "aiohttp>=3.9.3",
     "graia-amnesia>=0.11.0",
     "launart>=0.8.2",
+    "loguru>=0.7.2",
     "satori-python-core<1.4.0,>=1.3.0",
+    "yarl>=1.9.4",
 ]
 files = [
-    {file = "satori_python_client-1.3.0-py3-none-any.whl", hash = "sha256:dac5d20673235de528d71edf26f6fc5aa37a55b31f3c7ebe6c59a8d2b0948dfc"},
-    {file = "satori_python_client-1.3.0.tar.gz", hash = "sha256:ab5083aa3831bb51c37912690aa1345d40929fe31d20417c9ab76a61c8ccd273"},
+    {file = "satori_python_client-1.3.4-py3-none-any.whl", hash = "sha256:d0cfae6999e5ccb06667db5c1ccd0bcf413402274aa63c2c91314aff9af6cb60"},
+    {file = "satori_python_client-1.3.4.tar.gz", hash = "sha256:5ff65edeae6b3d8c38a5fc85c2072372ced05678a28158dad972ad0d7e96e50f"},
 ]
 
 [[package]]
 name = "satori-python-core"
-version = "1.3.0"
+version = "1.3.4"
 requires_python = "<4.0,>=3.10"
 summary = "Satori Protocol SDK for python, specify common part"
 groups = ["default", "dev"]
 dependencies = [
-    "loguru>=0.7.2",
     "typing-extensions>=4.7.0",
-    "yarl>=1.9.4",
 ]
 files = [
-    {file = "satori_python_core-1.3.0-py3-none-any.whl", hash = "sha256:e2dcc4547b9ace97002061bbcb2373b590929cba42f6897da91f587e6bd620b2"},
-    {file = "satori_python_core-1.3.0.tar.gz", hash = "sha256:d4a3bd3f6b01b4cf2eb25677f8868fc3103a9365972999b885e338bf160a74dd"},
+    {file = "satori_python_core-1.3.4-py3-none-any.whl", hash = "sha256:117d6bc152f9462b4082017e5daaac2a3105afa09840b8f991b492b42538b3bb"},
+    {file = "satori_python_core-1.3.4.tar.gz", hash = "sha256:784112cbce34f0f8802acfe1d92e2f3d36de698ec91b6c0bf0e2a18ed5826aa6"},
 ]
 
 [[package]]
 name = "satori-python-server"
-version = "1.3.0"
+version = "1.3.4"
 requires_python = "<4.0,>=3.10"
 summary = "Satori Protocol SDK for python, specify server part"
 groups = ["default", "dev"]
@@ -1306,14 +1306,16 @@ dependencies = [
     "aiohttp>=3.9.3",
     "graia-amnesia[uvicorn]<0.12.0,>=0.11.0",
     "launart>=0.8.2",
+    "loguru>=0.7.2",
     "python-multipart>=0.0.9",
     "satori-python-core<1.4.0,>=1.3.0",
     "starlette>=0.40.0",
     "websockets>=15.0.1",
+    "yarl>=1.9.4",
 ]
 files = [
-    {file = "satori_python_server-1.3.0-py3-none-any.whl", hash = "sha256:826c3de37b402e2674b6dfc410fb39c82bc9e91dd26e883777bf3aef44eb4cd9"},
-    {file = "satori_python_server-1.3.0.tar.gz", hash = "sha256:a1cab518b9bbdbb9abc1f2ceb1701c4869b93995a9e5ebc2232dec786cbe6a3b"},
+    {file = "satori_python_server-1.3.4-py3-none-any.whl", hash = "sha256:9bbcc7e1f9b459d959056cd4203199cded0eb3396e5f5bdd1f51a361d3bf9eec"},
+    {file = "satori_python_server-1.3.4.tar.gz", hash = "sha256:5bc45dbd7c4fe57b4b23e37f2b91cd2f157eba19aef97942267d71633cfcc5f0"},
 ]
 
 [[package]]

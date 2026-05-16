@@ -8,12 +8,12 @@ from typing import TYPE_CHECKING, Any, Callable, Optional, Union, cast
 from arclet.entari.config.models.default import BasicConfModel
 from typing_extensions import TypeAlias
 
-from arclet.entari import plugin
+from arclet.entari import Plugin, plugin
 from arclet.entari.config import EntariConfig
 from arclet.entari.config import config_model_validate
 from arclet.entari import logger as log_m
 
-from arclet.letoderea.typing import TCallable
+from arclet.letoderea.utils import TCallable
 from graia.amnesia.builtins.asgi import uvicorn, asgitypes
 from satori.server import Adapter, Server
 from starlette.applications import Starlette
@@ -28,6 +28,7 @@ DISPOSE: TypeAlias = Callable[[], None]
 uvicorn.LoguruHandler = log_m.LoguruHandler
 
 
+plg = Plugin.current()
 plugin.declare_static()
 plugin.metadata(
     "server",
@@ -117,11 +118,19 @@ plugin.add_service(ASGI := server.asgi_service)
 plugin.add_service(server)
 
 
+def _remove_subsequence(seq, subseq):
+    # 找到子序列的起始索引
+    for i in range(len(seq) - len(subseq) + 1):
+        if seq[i:i + len(subseq)] == subseq:
+            return seq[:i] + seq[i + len(subseq):]
+    return seq  # 如果没找到，返回原序列
+
+
 def get_asgi() -> Any:
     return server.app
 
 
-def replace_asgi(app: Union[ASGIApp, asgitypes.ASGI3Application]) -> DISPOSE:
+def replace_asgi(app: Union[ASGIApp, asgitypes.ASGI3Application]):
     """
     替换当前的 ASGI 应用
 
@@ -132,26 +141,21 @@ def replace_asgi(app: Union[ASGIApp, asgitypes.ASGI3Application]) -> DISPOSE:
         logger.warning("Server is blocking, cannot replace ASGI app")
         return lambda: None
 
-    old_app = server.app
-    old_routes = cast(Starlette, old_app).router.routes.copy()
-    server.app = app
-    server.app.router.routes[:0] = old_routes  # type: ignore
+    def _():
+        old_app = server.app
+        old_routes = cast(Starlette, old_app).router.routes.copy()
+        server.app = app
+        server.app.router.routes[:0] = old_routes  # type: ignore
 
-    def remove_subsequence(seq, subseq):
-        # 找到子序列的起始索引
-        for i in range(len(seq) - len(subseq) + 1):
-            if seq[i:i + len(subseq)] == subseq:
-                return seq[:i] + seq[i + len(subseq):]
-        return seq  # 如果没找到，返回原序列
+        def dispose(_old=old_app, _old_routes=old_routes):
+            server.app.router.routes = _remove_subsequence(  # type: ignore
+                cast(Starlette, server.app).router.routes, _old_routes
+            )
+            server.app = _old
 
-    def dispose(_old=old_app, _old_routes=old_routes):
-        server.app.router.routes = remove_subsequence(  # type: ignore
-            cast(Starlette, server.app).router.routes, _old_routes
-        )
-        server.app = _old
+        return dispose
 
-    plugin.collect_disposes(cast(DISPOSE, dispose))
-    return cast(DISPOSE, dispose)
+    return plg.effect(_, "replace_asgi")
 
 
 def add_route(
@@ -175,12 +179,15 @@ def add_route(
     def wrapper(endpoint: TCallable, /) -> TCallable:
         app = cast(Starlette, server.app)
         fn = getattr(app.router, "add_api_route", app.router.add_route)
-        fn(
-            path, endpoint, methods=methods, name=name, include_in_schema=include_in_schema, **kwargs
-        )
-        route = app.router.routes[-1]
-        plug = plugin.get_plugin(1)
-        plug.collect(lambda: app.router.routes.remove(route))
+
+        def _():
+            fn(
+                path, endpoint, methods=methods, name=name, include_in_schema=include_in_schema, **kwargs
+            )
+            route = app.router.routes[-1]
+            return lambda: app.router.routes.remove(route)
+
+        plg.effect(_, f"add_route {path} {methods}")
         return endpoint
 
     return wrapper
@@ -203,12 +210,15 @@ def add_websocket_route(
     def wrapper(endpoint: TCallable, /) -> TCallable:
         app = cast(Starlette, server.app)
         fn = getattr(app.router, "add_api_websocket_route", app.router.add_websocket_route)
-        fn(
-            path, endpoint, name=name, **kwargs
-        )
-        route = app.router.routes[-1]
-        plug = plugin.get_plugin(1)
-        plug.collect(lambda: app.router.routes.remove(route))
+
+        def _():
+            fn(
+                path, endpoint, name=name, **kwargs
+            )
+            route = app.router.routes[-1]
+            return lambda: app.router.routes.remove(route)
+
+        plg.effect(_, f"add_websocket_route {path}")
         return endpoint
 
     return wrapper
