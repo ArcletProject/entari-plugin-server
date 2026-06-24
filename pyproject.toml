@@ -1,12 +1,12 @@
 [project]
 name = "entari-plugin-server"
-version = "0.7.0"
+version = "0.7.1"
 description = "Entari plugin for running Satori Server"
 authors = [
     {name = "RF-Tar-Railt", email = "rf_tar_railt@qq.com"},
 ]
 dependencies = [
-    "arclet-entari<0.19.0,>=0.18.0rc1",
+    "arclet-entari<0.19.0,>=0.18.0rc4",
     "satori-python-server<1.4.0,>=1.3.0",
 ]
 requires-python = ">=3.10"
