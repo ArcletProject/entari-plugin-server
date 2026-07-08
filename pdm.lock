@@ -5,7 +5,7 @@
 groups = ["default", "dev", "fastapi"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:fc8465cfe3e5671c0c933b8878c92042e9025f3ade7c795ada0e1bf4fe170c0c"
+content_hash = "sha256:e1fe4a94f3e947d1df1e01b7f7ce9649366c409244ae7da936a066954ce642a6"
 
 [[metadata.targets]]
 requires_python = ">=3.10"
@@ -210,7 +210,7 @@ files = [
 
 [[package]]
 name = "arclet-entari"
-version = "0.18.0rc4"
+version = "0.18.1"
 requires_python = ">=3.10"
 summary = "Simple IM Framework based on satori-python"
 groups = ["default", "dev"]
@@ -224,26 +224,26 @@ dependencies = [
     "simpleeval>=1.0.3",
 ]
 files = [
-    {file = "arclet_entari-0.18.0rc4-py3-none-any.whl", hash = "sha256:2f8160c0cf9d49fa4773c8340aa54d4712ce5b205cf210673c9c4d50c68153d3"},
-    {file = "arclet_entari-0.18.0rc4.tar.gz", hash = "sha256:a9406c82da2aa4f0e75bce729ceaeca722218a3458ac8e1e976b29603be60a69"},
+    {file = "arclet_entari-0.18.1-py3-none-any.whl", hash = "sha256:56148a56d09022148bfd974c2b18a3b8c1d3d94fd93bbd1b8a41f4063409cc23"},
+    {file = "arclet_entari-0.18.1.tar.gz", hash = "sha256:13399468c8037c09e8da0919b4d5d24a5c83e5bf9dfa9b4cc89131b8e099d538"},
 ]
 
 [[package]]
 name = "arclet-entari"
-version = "0.18.0rc4"
+version = "0.18.1"
 extras = ["dotenv", "reload", "yaml"]
 requires_python = ">=3.10"
 summary = "Simple IM Framework based on satori-python"
 groups = ["dev"]
 dependencies = [
-    "arclet-entari==0.18.0rc4",
+    "arclet-entari==0.18.1",
     "python-dotenv>=1.0.1",
     "ruamel-yaml>=0.18.10",
     "watchfiles>=1.0.3",
 ]
 files = [
-    {file = "arclet_entari-0.18.0rc4-py3-none-any.whl", hash = "sha256:2f8160c0cf9d49fa4773c8340aa54d4712ce5b205cf210673c9c4d50c68153d3"},
-    {file = "arclet_entari-0.18.0rc4.tar.gz", hash = "sha256:a9406c82da2aa4f0e75bce729ceaeca722218a3458ac8e1e976b29603be60a69"},
+    {file = "arclet_entari-0.18.1-py3-none-any.whl", hash = "sha256:56148a56d09022148bfd974c2b18a3b8c1d3d94fd93bbd1b8a41f4063409cc23"},
+    {file = "arclet_entari-0.18.1.tar.gz", hash = "sha256:13399468c8037c09e8da0919b4d5d24a5c83e5bf9dfa9b4cc89131b8e099d538"},
 ]
 
 [[package]]
@@ -487,7 +487,7 @@ files = [
 
 [[package]]
 name = "fastapi"
-version = "0.136.1"
+version = "0.139.0"
 requires_python = ">=3.10"
 summary = "FastAPI framework, high performance, easy to learn, fast to code, ready for production"
 groups = ["dev", "fastapi"]
@@ -499,8 +499,8 @@ dependencies = [
     "typing-inspection>=0.4.2",
 ]
 files = [
-    {file = "fastapi-0.136.1-py3-none-any.whl", hash = "sha256:a6e9d7eeada96c93a4d69cb03836b44fa34e2854accb7244a1ece36cd4781c3f"},
-    {file = "fastapi-0.136.1.tar.gz", hash = "sha256:7af665ad7acfa0a3baf8983d393b6b471b9da10ede59c60045f49fbc89a0fa7f"},
+    {file = "fastapi-0.139.0-py3-none-any.whl", hash = "sha256:cf15e1e9e667ddb0ad63811e60bd11390d1aac838ca4a7a23f421807b2308189"},
+    {file = "fastapi-0.139.0.tar.gz", hash = "sha256:99ab7b2d92223c76d6cf10757ab3f89d45b38267fc20b2a136cf02f6beac3145"},
 ]
 
 [[package]]
@@ -1250,7 +1250,7 @@ files = [
 
 [[package]]
 name = "satori-python-adapter-qq"
-version = "0.4.0rc4"
+version = "0.4.0rc13"
 requires_python = "<4.0,>=3.10"
 summary = "Satori Protocol SDK for python, adapter for QQ"
 groups = ["dev"]
@@ -1259,8 +1259,8 @@ dependencies = [
     "satori-python<1.4.0,>=1.3.3",
 ]
 files = [
-    {file = "satori_python_adapter_qq-0.4.0rc4-py3-none-any.whl", hash = "sha256:670db49dbd45f4a6644032b1c839e4bc9a530467448f72d2ef5c13782b1a2d40"},
-    {file = "satori_python_adapter_qq-0.4.0rc4.tar.gz", hash = "sha256:1c065164141bc57fbd1098632389fcd204c6ef6cbcf5902cab0d05de0b90b566"},
+    {file = "satori_python_adapter_qq-0.4.0rc13-py3-none-any.whl", hash = "sha256:afb67b66010e7215b8208ea27b518fda4ac5baaa1ccc2f898631c5b040c94585"},
+    {file = "satori_python_adapter_qq-0.4.0rc13.tar.gz", hash = "sha256:834bb4df9f487c35f77dd709604cf3a0a5dacbb78c68eeb233707dd3a9d953d3"},
 ]
 
 [[package]]

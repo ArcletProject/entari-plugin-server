@@ -35,7 +35,7 @@ plugin.metadata(
     "server",
     PluginRole.LIBRARY,
     [{"name": "RF-Tar-Railt", "email": "rf_tar_railt@qq.com"}],
-    "0.7.2",
+    "0.7.3",
     description="为 Entari 提供 Satori 服务器支持，基于此为 Entari 提供 ASGI 服务、适配器连接等功能",
     urls={
         "homepage": "https://github.com/ArcletProject/entari-plugin-server",
@@ -87,8 +87,17 @@ def _load_adapter(adapter_config: dict):
     if isinstance(ext, type) and issubclass(ext, Adapter) and ext is not Adapter:
         args: dict = {k: (log_m.logger_id if v == "$logger_id" else v) for k, v in adapter_config.items()}
         sig = inspect.signature(ext.__init__)
-        filtered_args = {k: v for k, v in args.items() if k in sig.parameters}
         annos = inspect.get_annotations(ext.__init__, globals=module.__dict__, locals=globals(), eval_str=True)
+        if len(annos) == 1 and "config" in annos:
+            config_cls = annos["config"]
+            dcls = make_dataclass(
+                "AdapterConfig",
+                [],
+                bases=(config_cls, BasicConfModel),
+            )
+            dcls_instance = config_model_validate(dcls, args)
+            return ext(dcls_instance)  # type: ignore
+        filtered_args = {k: v for k, v in args.items() if k in sig.parameters}
         dcls = make_dataclass(
             "AdapterConfig",
             [
