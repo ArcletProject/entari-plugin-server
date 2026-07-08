@@ -3,6 +3,7 @@ from io import BytesIO
 from arclet.entari import Entari
 from arclet.entari.logger import log
 from arclet.entari.session import EntariProtocol
+from arclet.letoderea.utils import add_task
 from satori import Api, Event
 from satori.client import Account, ApiInfo
 from satori.exception import (
@@ -64,6 +65,7 @@ class DirectAdapterProtocol(EntariProtocol):
             req._form = _form
         else:
             req._json = params or {}
+
         resp = await self.server.http_server_handler(req)
         if isinstance(resp, JSONResponse):
             return decode(resp.body)  # type: ignore
@@ -108,4 +110,4 @@ class DirectAdapterServer(Server):
         else:
             acc = app.accounts[login_sn].custom(protocol_cls=DirectAdapterProtocol)
             acc.protocol.server = self
-        await app.handle_event(acc, event)
+        add_task(app.handle_event(acc, event))
