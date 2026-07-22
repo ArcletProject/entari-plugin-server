@@ -48,9 +48,9 @@ plugin.metadata(
 conf = plugin.get_config(Config)
 
 if conf.direct_adapter:
-    server = DirectAdapterServer(conf.host, conf.port, conf.path, conf.version, conf.token, uvicorn_options=conf.options, stream_threshold=conf.stream_threshold, stream_chunk_size=conf.stream_chunk_size)  # type: ignore
+    server = DirectAdapterServer(conf.host, int(conf.port), conf.path, conf.version, conf.token, uvicorn_options=conf.options, stream_threshold=conf.stream_threshold, stream_chunk_size=conf.stream_chunk_size)  # type: ignore
 else:
-    server = Server(conf.host, conf.port, conf.path, conf.version, conf.token, uvicorn_options=conf.options, stream_threshold=conf.stream_threshold, stream_chunk_size=conf.stream_chunk_size)  # type: ignore
+    server = Server(conf.host, int(conf.port), conf.path, conf.version, conf.token, uvicorn_options=conf.options, stream_threshold=conf.stream_threshold, stream_chunk_size=conf.stream_chunk_size)  # type: ignore
 
 pattern = re.compile(r"(?P<module>[\w.]+)\s*(:\s*(?P<attr>[\w.]+)\s*)?((?P<extras>\[.*\])\s*)?$")
 

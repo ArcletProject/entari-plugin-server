@@ -104,7 +104,7 @@ class Config(BasicConfModel):
     """适配器配置列表"""
     host: str = "127.0.0.1"
     """服务器主机地址"""
-    port: int = 5140
+    port: int | str = 5140
     """服务器端口"""
     path: str = ""
     """服务器部署路径"""
