@@ -5,7 +5,7 @@
 groups = ["default", "dev", "fastapi"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:e1fe4a94f3e947d1df1e01b7f7ce9649366c409244ae7da936a066954ce642a6"
+content_hash = "sha256:bf1f52b9ce12e4b64bf1255dce6740c5c2c260ffdea7985c353abd2889383475"
 
 [[metadata.targets]]
 requires_python = ">=3.10"
@@ -210,45 +210,45 @@ files = [
 
 [[package]]
 name = "arclet-entari"
-version = "0.18.1"
+version = "0.19.0rc1"
 requires_python = ">=3.10"
 summary = "Simple IM Framework based on satori-python"
 groups = ["default", "dev"]
 dependencies = [
     "arclet-alconna-tools>=0.7.3",
     "arclet-alconna<2.0.0,>=1.8.44",
-    "arclet-letoderea<0.22.0,>=0.21.3",
+    "arclet-letoderea<0.23.0,>=0.22.0",
     "nonestorage>=0.1.0",
     "satori-python-client<1.4.0,>=1.3.2",
     "satori-python-core<1.4.0,>=1.3.5",
     "simpleeval>=1.0.3",
 ]
 files = [
-    {file = "arclet_entari-0.18.1-py3-none-any.whl", hash = "sha256:56148a56d09022148bfd974c2b18a3b8c1d3d94fd93bbd1b8a41f4063409cc23"},
-    {file = "arclet_entari-0.18.1.tar.gz", hash = "sha256:13399468c8037c09e8da0919b4d5d24a5c83e5bf9dfa9b4cc89131b8e099d538"},
+    {file = "arclet_entari-0.19.0rc1-py3-none-any.whl", hash = "sha256:41004e07b69e24142108f12c6e71109261916b0df66cc0fd0b96627307e1bbd2"},
+    {file = "arclet_entari-0.19.0rc1.tar.gz", hash = "sha256:984543fd86597db918112e5e8870f2741b8d7a20ccabc6aa35130c1a45b5b57f"},
 ]
 
 [[package]]
 name = "arclet-entari"
-version = "0.18.1"
+version = "0.19.0rc1"
 extras = ["dotenv", "reload", "yaml"]
 requires_python = ">=3.10"
 summary = "Simple IM Framework based on satori-python"
 groups = ["dev"]
 dependencies = [
-    "arclet-entari==0.18.1",
+    "arclet-entari==0.19.0rc1",
     "python-dotenv>=1.0.1",
     "ruamel-yaml>=0.18.10",
     "watchfiles>=1.0.3",
 ]
 files = [
-    {file = "arclet_entari-0.18.1-py3-none-any.whl", hash = "sha256:56148a56d09022148bfd974c2b18a3b8c1d3d94fd93bbd1b8a41f4063409cc23"},
-    {file = "arclet_entari-0.18.1.tar.gz", hash = "sha256:13399468c8037c09e8da0919b4d5d24a5c83e5bf9dfa9b4cc89131b8e099d538"},
+    {file = "arclet_entari-0.19.0rc1-py3-none-any.whl", hash = "sha256:41004e07b69e24142108f12c6e71109261916b0df66cc0fd0b96627307e1bbd2"},
+    {file = "arclet_entari-0.19.0rc1.tar.gz", hash = "sha256:984543fd86597db918112e5e8870f2741b8d7a20ccabc6aa35130c1a45b5b57f"},
 ]
 
 [[package]]
 name = "arclet-letoderea"
-version = "0.21.3"
+version = "0.22.0"
 requires_python = "<4.0,>=3.10"
 summary = "A high-performance, simple-structured event system, relies on asyncio"
 groups = ["default", "dev"]
@@ -257,8 +257,8 @@ dependencies = [
     "typing-extensions>=4.12.0",
 ]
 files = [
-    {file = "arclet_letoderea-0.21.3-py3-none-any.whl", hash = "sha256:ea1e235a037a193c734fbbe754969db9242d551290b11a0c0babae4e17d56d9d"},
-    {file = "arclet_letoderea-0.21.3.tar.gz", hash = "sha256:4a2588d521afcd18d356804dc4289209be07b885e1d7851c8e37c8c03b954af4"},
+    {file = "arclet_letoderea-0.22.0-py3-none-any.whl", hash = "sha256:7b0abe3e5d532cc4db8527f97bafeefb698fcb83d5094a41959eb3d0f5d7c847"},
+    {file = "arclet_letoderea-0.22.0.tar.gz", hash = "sha256:eab31c29a42aa61265944ec6aab31f94fb7465df77b53408875869cd70c4009c"},
 ]
 
 [[package]]
@@ -487,7 +487,7 @@ files = [
 
 [[package]]
 name = "fastapi"
-version = "0.139.0"
+version = "0.141.1"
 requires_python = ">=3.10"
 summary = "FastAPI framework, high performance, easy to learn, fast to code, ready for production"
 groups = ["dev", "fastapi"]
@@ -499,8 +499,8 @@ dependencies = [
     "typing-inspection>=0.4.2",
 ]
 files = [
-    {file = "fastapi-0.139.0-py3-none-any.whl", hash = "sha256:cf15e1e9e667ddb0ad63811e60bd11390d1aac838ca4a7a23f421807b2308189"},
-    {file = "fastapi-0.139.0.tar.gz", hash = "sha256:99ab7b2d92223c76d6cf10757ab3f89d45b38267fc20b2a136cf02f6beac3145"},
+    {file = "fastapi-0.141.1-py3-none-any.whl", hash = "sha256:bfb91aa2d334c61cb35ba9a116fc123b3d3df31640b801cf57a7a78ec3f603b3"},
+    {file = "fastapi-0.141.1.tar.gz", hash = "sha256:e8822fc40db1e1858054d7a949a888695bc9bdce70139178e33bd2871a453ca1"},
 ]
 
 [[package]]
@@ -1250,7 +1250,7 @@ files = [
 
 [[package]]
 name = "satori-python-adapter-qq"
-version = "0.4.1"
+version = "0.4.3"
 requires_python = "<4.0,>=3.10"
 summary = "Satori Protocol SDK for python, adapter for QQ"
 groups = ["dev"]
@@ -1259,8 +1259,8 @@ dependencies = [
     "satori-python<1.4.0,>=1.3.7",
 ]
 files = [
-    {file = "satori_python_adapter_qq-0.4.1-py3-none-any.whl", hash = "sha256:5bcb7202797eeaf7d5284312bdfc26e72f407d1832df82e46d814d4712a2fa6f"},
-    {file = "satori_python_adapter_qq-0.4.1.tar.gz", hash = "sha256:92dddc5582fef599394d8519e49365211f7c5da853d575d50f5751658c3f89da"},
+    {file = "satori_python_adapter_qq-0.4.3-py3-none-any.whl", hash = "sha256:533bd686c2277369215db15a017d7d2db056a7c6ecf7c801138aa32d3a4d9e98"},
+    {file = "satori_python_adapter_qq-0.4.3.tar.gz", hash = "sha256:0110130cc89980d7ff8c5eaf173307bcc6c031aa6f014745626621495cb56761"},
 ]
 
 [[package]]

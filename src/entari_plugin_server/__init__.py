@@ -8,8 +8,8 @@ from typing import TYPE_CHECKING, Any, Callable, Optional, Union, cast
 from arclet.entari.config.models.default import BasicConfModel
 from typing_extensions import TypeAlias
 
-from arclet.entari import Plugin, plugin
-from arclet.entari.plugin import PluginRole
+from arclet.entari import plugin
+from arclet.entari.plugin import PluginRole, get_plugin
 from arclet.entari.config import EntariConfig
 from arclet.entari.config import config_model_validate
 from arclet.entari import logger as log_m
@@ -29,13 +29,12 @@ DISPOSE: TypeAlias = Callable[[], None]
 uvicorn.LoguruHandler = log_m.LoguruHandler
 
 
-plg = Plugin.current()
 plugin.declare_static()
 plugin.metadata(
     "server",
     PluginRole.LIBRARY,
     [{"name": "RF-Tar-Railt", "email": "rf_tar_railt@qq.com"}],
-    "0.7.4",
+    "0.7.5",
     description="为 Entari 提供 Satori 服务器支持，基于此为 Entari 提供 ASGI 服务、适配器连接等功能",
     urls={
         "homepage": "https://github.com/ArcletProject/entari-plugin-server",
@@ -148,6 +147,8 @@ def replace_asgi(app: Union[ASGIApp, asgitypes.ASGI3Application]):
     Args:
         app (Any): 新的 ASGI 应用
     """
+    plg = get_plugin(1)
+
     if server.status.blocking:
         logger.warning("Server is blocking, cannot replace ASGI app")
         return lambda: None
@@ -186,6 +187,7 @@ def add_route(
         include_in_schema (bool, optional): 是否包含在 OpenAPI 文档中，默认为 True
         kwargs (Any): 其他参数，例如 FastAPI 的路由参数
     """
+    plg = get_plugin(1)
 
     def wrapper(endpoint: TCallable, /) -> TCallable:
         app = cast(Starlette, server.app)
@@ -217,6 +219,7 @@ def add_websocket_route(
         name (str, optional): 路由名称，默认为 None
         kwargs (Any): 其他参数，例如 FastAPI 的路由参数
     """
+    plg = get_plugin(1)
 
     def wrapper(endpoint: TCallable, /) -> TCallable:
         app = cast(Starlette, server.app)
