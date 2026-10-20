@@ -10,8 +10,7 @@ from typing_extensions import TypeAlias
 
 from arclet.entari import plugin
 from arclet.entari.plugin import PluginRole, get_plugin
-from arclet.entari.config import EntariConfig
-from arclet.entari.config import config_model_validate
+from arclet.entari.config import EntariConfig, config_model_validate, config_model_schema
 from arclet.entari import logger as log_m
 
 from arclet.letoderea.utils import TCallable
@@ -45,6 +44,7 @@ plugin.metadata(
 
 
 conf = plugin.get_config(Config)
+_plg = plugin.get_plugin()
 
 if conf.direct_adapter:
     server = DirectAdapterServer(conf.host, int(conf.port), conf.path, conf.version, conf.token, uvicorn_options=conf.options, stream_threshold=conf.stream_threshold, stream_chunk_size=conf.stream_chunk_size)  # type: ignore
@@ -52,6 +52,8 @@ else:
     server = Server(conf.host, int(conf.port), conf.path, conf.version, conf.token, uvicorn_options=conf.options, stream_threshold=conf.stream_threshold, stream_chunk_size=conf.stream_chunk_size)  # type: ignore
 
 pattern = re.compile(r"(?P<module>[\w.]+)\s*(:\s*(?P<attr>[\w.]+)\s*)?((?P<extras>\[.*\])\s*)?$")
+
+_adapter_schemas = []
 
 
 def _load_adapter(adapter_config: dict):
@@ -94,6 +96,13 @@ def _load_adapter(adapter_config: dict):
                 [],
                 bases=(config_cls, BasicConfModel),
             )
+            _schema = config_model_schema(
+                dcls,
+                ref_root=f"/properties/plugins/properties/{_plg._config_key}/properties/adapters/items/oneOf/{len(_adapter_schemas)}/"
+            )
+            _schema["properties"]["$path"] = {"const": adapter_config["$path"]}
+            _schema["required"] = ["$path"]
+            _adapter_schemas.append(_schema)
             dcls_instance = config_model_validate(dcls, args)
             return ext(dcls_instance)  # type: ignore
         filtered_args = {k: v for k, v in args.items() if k in sig.parameters}
@@ -106,6 +115,13 @@ def _load_adapter(adapter_config: dict):
             ],
             bases=(BasicConfModel,),
         )
+        _schema = config_model_schema(
+            dcls,
+            ref_root=f"/properties/plugins/properties/{_plg._config_key}/properties/adapters/items/oneOf/{len(_adapter_schemas)}/"
+        )
+        _schema["properties"]["$path"] = {"const": adapter_config["$path"]}
+        _schema["required"] = ["$path"]
+        _adapter_schemas.append(_schema)
         dcls_instance = config_model_validate(dcls, filtered_args)
         return ext(**vars(dcls_instance))
     elif isinstance(ext, Adapter):
@@ -115,6 +131,16 @@ def _load_adapter(adapter_config: dict):
 
 
 adapters: list[Adapter] = [*filter(None, map(_load_adapter, conf.adapters + EntariConfig.instance.data.get("adapters", [])))]
+
+_plg.register_schema(
+    "properties.adapters",
+    {
+        "type": "array",
+        "items": {"oneOf": _adapter_schemas} if _adapter_schemas else {"type": "object"},
+        "title": "Adapters"
+    },
+    replace=True
+)
 
 for adapter in adapters:
     logger.debug(f"Applying adapter {adapter}")

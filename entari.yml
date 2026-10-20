@@ -37,7 +37,6 @@ plugins:
         token: ${{ env.QQ_TOKEN }}
         intent:
           guild_messages: true
-          direct_message: true
           message_audit: true
           at_messages: false
           c2c_group_at_messages: true
