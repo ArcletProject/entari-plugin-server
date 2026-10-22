@@ -6,11 +6,10 @@ from launart.status import Phase
 from starlette.datastructures import FormData
 from starlette.responses import JSONResponse, Response
 
-from satori import Api
+from satori import Api, Login
 from satori.exception import ActionFailed
 from satori.server import Adapter as BaseAdapter
 from satori.server import Request
-from satori.server.adapter import LoginType
 
 
 class EntariAdapter(BaseAdapter):
@@ -67,7 +66,7 @@ class EntariAdapter(BaseAdapter):
         async with self.server.session.get(path) as resp:
             return Response(await resp.read())
 
-    async def get_logins(self) -> list[LoginType]:
+    async def get_logins(self) -> list[Login]:
         return [acc.self_info for acc in self.app.accounts.values()]
 
     @property

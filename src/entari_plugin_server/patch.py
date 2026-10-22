@@ -1,10 +1,12 @@
 from io import BytesIO
+from typing import TYPE_CHECKING
 
 from arclet.entari import Entari
 from arclet.entari.logger import log
 from arclet.entari.session import EntariProtocol
 from arclet.letoderea.utils import add_task
-from satori import Api, Event
+from satori import Api, Event, EventType, LoginStatus
+from satori import event as events
 from satori.client import Account, ApiInfo
 from satori.exception import (
     ActionFailed,
@@ -96,18 +98,86 @@ class DirectAdapterServer(Server):
         for provider in self.providers:
             proxy_urls.extend(provider.proxy_urls())
         await super().post(event)
-        login_sn = f"{event.login.platform}_{event.login.user.id}@{id(self):x}"
-        if login_sn not in app.accounts:
-            acc = Account(
-                event.login,
-                ApiInfo(self.host, self.port, self.path, self.token),  # type: ignore
+        config = ApiInfo(self.host, self.port, self.path, self.token)
+        if event.type == EventType.LOGIN_ADDED:
+            if TYPE_CHECKING:
+                assert isinstance(event, events.LoginEvent)
+            login = event.login
+            if not login.user:
+                logger.warning(f"Received login-added event without user info: {login}")
+                return
+            login_sn = login.identifier
+            account = Account(
+                login,
+                config,
                 proxy_urls,
-                DirectAdapterProtocol
+                DirectAdapterProtocol,
             )
-            acc.protocol.server = self
-            app.accounts[login_sn] = acc
-            logger.debug(f"account added: {acc}")
+            account.protocol.server = self
+            logger.info(f"account added: {account}")
+            (account.connected.set() if login.status == LoginStatus.ONLINE else account.connected.clear())
+            app.accounts[login_sn] = account
+            await app.account_update(account, login.status)
+        elif event.type == EventType.LOGIN_UPDATED:
+            if TYPE_CHECKING:
+                assert isinstance(event, events.LoginEvent)
+            login = event.login
+            if not login.user:
+                logger.warning(f"Received login-updated event without user info: {login}")
+                return
+            login_sn = login.identifier
+            if login_sn not in app.accounts:
+                if login.status != LoginStatus.ONLINE:
+                    logger.warning(f"Received event for unknown account: {event}")
+                    return
+                account = Account(
+                    login,
+                    config,
+                    proxy_urls,
+                    DirectAdapterProtocol,
+                )
+                logger.info(f"account added: {account}")
+                account.protocol.server = self
+                account.connected.set()
+                app.accounts[login_sn] = account
+                await app.account_update(account, LoginStatus.ONLINE)
+            else:
+                account = app.accounts[login_sn].custom(protocol_cls=DirectAdapterProtocol)
+                account.protocol.server = self
+                account.self_info = login
+            logger.info(f"account updated: {account}")
+            (
+                account.connected.set()
+                if login.status in (LoginStatus.ONLINE, LoginStatus.CONNECT)
+                else account.connected.clear()
+            )
+            await app.account_update(account, login.status)
+        elif event.type == EventType.LOGIN_REMOVED:
+            if TYPE_CHECKING:
+                assert isinstance(event, events.LoginEvent)
+            login = event.login
+            if not login.user:
+                logger.warning(f"Received login-removed event without user info: {login}")
+                return
+            login_sn = login.identifier
+            if login_sn not in app.accounts:
+                logger.warning(f"Received event for unknown account: {event}")
+                return
+            account = app.accounts[login_sn].custom(protocol_cls=DirectAdapterProtocol)
+            account.protocol.server = self
         else:
-            acc = app.accounts[login_sn].custom(protocol_cls=DirectAdapterProtocol)
-            acc.protocol.server = self
-        add_task(app.handle_event(acc, event))
+            login_sn = event.login.identifier
+            if login_sn not in app.accounts:
+                logger.warning(f"Received event for unknown account: {event}")
+                return
+            account = app.accounts[login_sn].custom(protocol_cls=DirectAdapterProtocol)
+            account.protocol.server = self
+        if app.event_callbacks:
+            for callback in app.event_callbacks:
+                add_task(callback(account, event))  # type: ignore
+
+        if event.type == EventType.LOGIN_REMOVED:
+            logger.info(f"account removed: {account}")
+            account.connected.clear()
+            await app.account_update(account, LoginStatus.OFFLINE)
+            del app.accounts[login_sn]
