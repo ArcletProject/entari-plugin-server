@@ -33,7 +33,7 @@ plugin.metadata(
     "server",
     PluginRole.LIBRARY,
     [{"name": "RF-Tar-Railt", "email": "rf_tar_railt@qq.com"}],
-    "0.8.1",
+    "0.8.2",
     description="为 Entari 提供 Satori 服务器支持，基于此为 Entari 提供 ASGI 服务、适配器连接等功能",
     urls={
         "homepage": "https://github.com/ArcletProject/entari-plugin-server",
