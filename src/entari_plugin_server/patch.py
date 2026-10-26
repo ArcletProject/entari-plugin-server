@@ -99,26 +99,7 @@ class DirectAdapterServer(Server):
             proxy_urls.extend(provider.proxy_urls())
         await super().post(event)
         config = ApiInfo(self.host, self.port, self.path, self.token)
-        if event.type == EventType.LOGIN_ADDED:
-            if TYPE_CHECKING:
-                assert isinstance(event, events.LoginEvent)
-            login = event.login
-            if not login.user:
-                logger.warning(f"Received login-added event without user info: {login}")
-                return
-            login_sn = login.identifier
-            account = Account(
-                login,
-                config,
-                proxy_urls,
-                DirectAdapterProtocol,
-            )
-            account.protocol.server = self
-            logger.info(f"account added: {account}")
-            (account.connected.set() if login.status == LoginStatus.ONLINE else account.connected.clear())
-            app.accounts[login_sn] = account
-            await app.account_update(account, login.status)
-        elif event.type == EventType.LOGIN_UPDATED:
+        if event.type in (EventType.LOGIN_ADDED, EventType.LOGIN_UPDATED):
             if TYPE_CHECKING:
                 assert isinstance(event, events.LoginEvent)
             login = event.login
@@ -127,9 +108,6 @@ class DirectAdapterServer(Server):
                 return
             login_sn = login.identifier
             if login_sn not in app.accounts:
-                if login.status != LoginStatus.ONLINE:
-                    logger.warning(f"Received event for unknown account: {event}")
-                    return
                 account = Account(
                     login,
                     config,
@@ -137,15 +115,13 @@ class DirectAdapterServer(Server):
                     DirectAdapterProtocol,
                 )
                 logger.info(f"account added: {account}")
-                account.protocol.server = self
-                account.connected.set()
-                app.accounts[login_sn] = account
-                await app.account_update(account, LoginStatus.ONLINE)
             else:
                 account = app.accounts[login_sn].custom(protocol_cls=DirectAdapterProtocol)
-                account.protocol.server = self
                 account.self_info = login
-            logger.info(f"account updated: {account}")
+                account.config = config
+                logger.info(f"account updated: {account} to {login.status.name}")
+            app.accounts[login_sn] = account
+            account.protocol.server = self
             (
                 account.connected.set()
                 if login.status in (LoginStatus.ONLINE, LoginStatus.CONNECT)
@@ -164,14 +140,20 @@ class DirectAdapterServer(Server):
                 logger.warning(f"Received event for unknown account: {event}")
                 return
             account = app.accounts[login_sn].custom(protocol_cls=DirectAdapterProtocol)
+            app.accounts[login_sn] = account
             account.protocol.server = self
+            account.config = config
+            account.self_info = login
         else:
             login_sn = event.login.identifier
             if login_sn not in app.accounts:
                 logger.warning(f"Received event for unknown account: {event}")
                 return
             account = app.accounts[login_sn].custom(protocol_cls=DirectAdapterProtocol)
+            app.accounts[login_sn] = account
             account.protocol.server = self
+            account.config = config
+
         if app.event_callbacks:
             for callback in app.event_callbacks:
                 add_task(callback(account, event))  # type: ignore
@@ -179,5 +161,5 @@ class DirectAdapterServer(Server):
         if event.type == EventType.LOGIN_REMOVED:
             logger.info(f"account removed: {account}")
             account.connected.clear()
-            await app.account_update(account, LoginStatus.OFFLINE)
+            await app.account_update(account, event.login.status)
             del app.accounts[login_sn]
